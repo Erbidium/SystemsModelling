@@ -1,12 +1,12 @@
 ﻿namespace Lab1.Generators;
 
-public class FirstGenerator : IGenerator
+public class ExponentialDistributionGenerator : IGenerator
 {
     private double _lambda;
 
     private Random _random = new();
     
-    public FirstGenerator(double lambda)
+    public ExponentialDistributionGenerator(double lambda)
     {
         _lambda = lambda;
     }
