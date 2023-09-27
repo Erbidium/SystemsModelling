@@ -15,4 +15,9 @@ public class ExponentialDistributionGenerator : IGenerator
     {
         return -1 / _lambda * Math.Log(_random.NextDouble());
     }
+
+    public double GetDistributionLawProbability(double value)
+    {
+        return 1 - Math.Pow(Math.E, -_lambda * value);
+    }
 }

@@ -3,4 +3,6 @@
 public interface IGenerator
 {
     double GenerateNumber();
+
+    double GetDistributionLawProbability(double value);
 }

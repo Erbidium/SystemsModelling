@@ -19,4 +19,14 @@ public class UniformDistributionGenerator : IGenerator
     {
         return A * (_currentZ % C) / C;
     }
+
+    public double GetDistributionLawProbability(double value)
+    {
+        return value switch
+        {
+            < 0 => 0,
+            >= 1 => 1,
+            _ => value
+        };
+    }
 }
