@@ -9,6 +9,8 @@ var generator = new NormalDistributionGenerator(0.5, 0.1);
 var numberSequenceGenerator = new NumberSequenceGenerator(generator);
 
 var plotPath = HistogramCreator.SaveHistogramImage(numberSequenceGenerator, generatedNumbersCount);
-
 Console.WriteLine(plotPath);
 
+var (average, variance) = StatsCalculator.GetStats(numberSequenceGenerator.GenerateSequence(10000));
+Console.WriteLine($"Average: {average}");
+Console.WriteLine($"Variance: {variance}");
