@@ -2,11 +2,11 @@
 
 public static class StatsCalculator
 {
-    public static (double average, double variance)GetStats(List<double> numbers)
+    public static (double average, double variance)GetStats(List<double> numbersSequence)
     {
-        double average = numbers.Average();
-        double variance = numbers.Sum(number => Math.Pow(number - average, 2))
-                          / (numbers.Count - 1);
+        double average = numbersSequence.Average();
+        double variance = numbersSequence.Sum(number => Math.Pow(number - average, 2))
+                          / (numbersSequence.Count - 1);
 
         return (average, variance);
     }
