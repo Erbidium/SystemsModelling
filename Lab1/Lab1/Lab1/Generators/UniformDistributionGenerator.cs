@@ -17,7 +17,8 @@ public class UniformDistributionGenerator : IGenerator
     
     public double GenerateNumber()
     {
-        return A * (_currentZ % C) / C;
+        _currentZ = A * (_currentZ % C) / C;
+        return _currentZ;
     }
 
     public double GetDistributionLawProbability(double value)

@@ -1,3 +1,14 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Lab1.Generators;
 
-Console.WriteLine("Hello, World!");
+const int generatedNumbersCount = 10000;
+
+// var generator = new ExponentialDistributionGenerator(1);
+var generator = new NormalDistributionGenerator(0.5, 0.1);
+// var generator = new UniformDistributionGenerator();
+
+var numberSequenceGenerator = new NumberSequenceGenerator(generator);
+
+var plotPath = HistogramCreator.SaveHistogramImage(numberSequenceGenerator, generatedNumbersCount);
+
+Console.WriteLine(plotPath);
+

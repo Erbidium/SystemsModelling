@@ -2,11 +2,11 @@
 
 public class NumberSequenceGenerator
 {
-    private IGenerator _generator;
+    public IGenerator Generator { get; }
 
     public NumberSequenceGenerator(IGenerator generator)
     {
-        _generator = generator;
+        Generator = generator;
     }
     
     public List<double> GenerateSequence(int numbersCount)
@@ -14,7 +14,7 @@ public class NumberSequenceGenerator
         List<double> generatedNumbers = new();
         for (int i = 0; i < numbersCount; i++)
         {
-            generatedNumbers.Add(_generator.GenerateNumber());
+            generatedNumbers.Add(Generator.GenerateNumber());
         }
 
         return generatedNumbers;
