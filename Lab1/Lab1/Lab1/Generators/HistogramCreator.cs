@@ -10,10 +10,10 @@ public static class HistogramCreator
         double min = numbersSequence.Min();
         double max = numbersSequence.Max();
         
-        const int intervalLength = 100;
+        const int intervalsCount = 100;
         
         var plot = new Plot();
-        var histogram = new Histogram(min, max, intervalLength);
+        var histogram = new Histogram(min, max, intervalsCount);
         
         histogram.AddRange(numbersSequence);
 
