@@ -3,9 +3,9 @@ using Lab1.Generators;
 
 const int generatedNumbersCount = 10000;
 
-// var generator = new ExponentialDistributionGenerator(1); // 1
+//var generator = new ExponentialDistributionGenerator(100); // 1
 var generator = new NormalDistributionGenerator(0.5, 0.1); // 2
-// var generator = new UniformDistributionGenerator(); // 2
+//var generator = new UniformDistributionGenerator(); // 2
 
 var numberSequenceGenerator = new NumberSequenceGenerator(generator);
 var numbersSequence = numberSequenceGenerator.GenerateSequence(generatedNumbersCount);
