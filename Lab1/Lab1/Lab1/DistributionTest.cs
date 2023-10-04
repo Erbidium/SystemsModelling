@@ -5,7 +5,7 @@ namespace Lab1;
 
 public static class DistributionTest
 {
-    public static void ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters, int intervalsCount)
+    public static double ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters, int intervalsCount)
     {
         double min = numbersSequence.Min();
         double max = numbersSequence.Max();
@@ -26,6 +26,8 @@ public static class DistributionTest
         (double confidenceChance, double tableChiSquared) = FindBestConfidenceChance(calculatedChiSquared, degreesOfFreedom);
 
         Console.WriteLine($"Table X2: {tableChiSquared},  confidence chance: {confidenceChance}");
+
+        return confidenceChance;
 
         int[] CreateIntervals()
         {
