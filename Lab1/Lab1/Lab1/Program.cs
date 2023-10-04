@@ -1,5 +1,4 @@
-﻿using Lab1;
-using Lab1.Generators;
+﻿using Lab1.Generators;
 
 const int generatedNumbersCount = 10000;
 
