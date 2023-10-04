@@ -16,18 +16,16 @@ public static class DistributionTest
 
         var mergedIntervals = MergeIntervals(intervals, 5);
 
-        double x2 = GetChiSquared();
+        double calculatedChiSquared = GetChiSquared();
 
         Console.WriteLine($"Intervals count: {mergedIntervals.Count}");
-        Console.WriteLine($"X2: {x2}");
+        Console.WriteLine($"X2: {calculatedChiSquared}");
 
         int degreesOfFreedom = mergedIntervals.Count - 1 - numberOfDistributionLawParameters;
 
-        const double alpha = 0.05;
-        
-        double tableChiSquared =  new ChiSquared(degreesOfFreedom).InverseCumulativeDistribution(alpha);
+        (double confidenceChance, double tableChiSquared) = FindBestConfidenceChance(calculatedChiSquared, degreesOfFreedom);
 
-        Console.WriteLine($"Table X2: {tableChiSquared},  confidence chance: {1 - alpha}");
+        Console.WriteLine($"Table X2: {tableChiSquared},  confidence chance: {confidenceChance}");
 
         int[] CreateIntervals()
         {
@@ -86,6 +84,23 @@ public static class DistributionTest
             }
 
             return chiSquaredValue;
+        }
+
+        static (double confidenceChance, double tableChiSquared) FindBestConfidenceChance(double calculatedChiSquared, int degreesOfFreedom)
+        {
+            double tableChiSquaredLocal = 0;
+            double bestConfidenceChance = 0;
+            for (double alpha = 0.01; alpha < 1; alpha += 0.01)
+            {
+                tableChiSquaredLocal =  new ChiSquared(degreesOfFreedom).InverseCumulativeDistribution(alpha);
+                if (!(calculatedChiSquared < tableChiSquaredLocal))
+                    continue;
+            
+                bestConfidenceChance = Math.Round(1 - alpha, 2);
+                break;
+            }
+
+            return (bestConfidenceChance, tableChiSquaredLocal);
         }
     }
 }
