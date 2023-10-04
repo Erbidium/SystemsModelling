@@ -32,7 +32,7 @@ public class NormalDistributionGenerator : IGenerator
     
     public double GetDistributionLawProbability(double value)
     {
-        return 0.5 * (1 + Erf((value - GenerateMu()) / (_sigma * Math.Sqrt(2))));
+        return 0.5 * (1 + Erf((value - _a) / (_sigma * Math.Sqrt(2))));
     }
 
     private static double Erf(double value)
