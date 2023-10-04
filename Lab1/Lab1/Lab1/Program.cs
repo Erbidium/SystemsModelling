@@ -17,4 +17,4 @@ var (average, variance) = StatsCalculator.GetStats(numberSequenceGenerator.Gener
 Console.WriteLine($"Average: {average}");
 Console.WriteLine($"Variance: {variance}");
 
-DistributionTest.ChiSquaredTest(numbersSequence, generator, 2);
+DistributionTest.ChiSquaredTest(numbersSequence, generator, 2, 100);

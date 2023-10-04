@@ -5,18 +5,16 @@ namespace Lab1;
 
 public static class DistributionTest
 {
-    public static void ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters)
+    public static void ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters, int intervalsCount)
     {
         double min = numbersSequence.Min();
         double max = numbersSequence.Max();
-        
-        const int intervalsCount = 100;
         
         double intervalWidth = (max - min) / intervalsCount;
 
         int[] intervals = CreateIntervals();
 
-        var mergedIntervals = MergeIntervals(intervals);
+        var mergedIntervals = MergeIntervals(intervals, 5);
 
         double x2 = GetChiSquared();
 
@@ -44,10 +42,9 @@ public static class DistributionTest
             return createdIntervals;
         }
         
-        static List<(int startIntervalIndex, int endIntervalIndex, int intervalCount)> MergeIntervals(int[] intervals)
+        static List<(int startIntervalIndex, int endIntervalIndex, int intervalCount)> MergeIntervals(int[] intervals, int minIntervalCount)
         {
             List<(int startIntervalIndex, int endIntervalIndex, int intervalCount)> mergedIntervals = new();
-            const int minIntervalCount = 5;
         
             int startIntervalIndex = 0;
             int currentIntervalCount = 0;
