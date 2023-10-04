@@ -2,7 +2,7 @@
 
 public class UniformDistributionGenerator : IGenerator
 {
-    private double _z0 = 1;
+    private double _z0 = new Random().NextDouble();
 
     private double _a = Math.Pow(5, 13);
 
