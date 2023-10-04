@@ -5,9 +5,7 @@ public class NumberSequenceGenerator
     public IGenerator Generator { get; }
 
     public NumberSequenceGenerator(IGenerator generator)
-    {
-        Generator = generator;
-    }
+        => Generator = generator;
     
     public List<double> GenerateSequence(int numbersCount)
     {

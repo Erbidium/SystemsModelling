@@ -14,26 +14,20 @@ public class NormalDistributionGenerator : IGenerator
         _a = a;
     }
     public double GenerateNumber()
-    {
-        return _sigma * GenerateMu() + _a;
-    }
+        => _sigma * GenerateMu() + _a;
 
     private double GenerateMu()
     {
         double sum = 0;
         
         for (int i = 0; i < 12; i++)
-        {
             sum += _random.NextDouble();
-        }
 
         return sum - 6;
     }
     
     public double GetDistributionLawProbability(double value)
-    {
-        return 0.5 * (1 + Erf((value - _a) / (_sigma * Math.Sqrt(2))));
-    }
+        => 0.5 * (1 + Erf((value - _a) / (_sigma * Math.Sqrt(2))));
 
     private static double Erf(double value)
     {

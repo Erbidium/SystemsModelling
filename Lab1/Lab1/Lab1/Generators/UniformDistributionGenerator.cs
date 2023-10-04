@@ -11,9 +11,7 @@ public class UniformDistributionGenerator : IGenerator
     private double _currentZ;
 
     public UniformDistributionGenerator()
-    {
-        _currentZ = _z0;
-    }
+        => _currentZ = _z0;
     
     public double GenerateNumber()
     {
@@ -22,12 +20,10 @@ public class UniformDistributionGenerator : IGenerator
     }
 
     public double GetDistributionLawProbability(double value)
-    {
-        return value switch
+        => value switch
         {
             < 0 => 0,
             >= 1 => 1,
             _ => value
         };
-    }
 }
