@@ -63,7 +63,7 @@ public static class DistributionTest
             }
         
             if (currentIntervalCount != 0)
-                mergedIntervals.Add((startIntervalIndex, mergedIntervals.Count, currentIntervalCount));
+                mergedIntervals.Add((startIntervalIndex, intervals.Length, currentIntervalCount));
 
             return mergedIntervals;
         }
