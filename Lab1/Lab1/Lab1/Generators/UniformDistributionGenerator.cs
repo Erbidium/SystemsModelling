@@ -4,9 +4,9 @@ public class UniformDistributionGenerator : IGenerator
 {
     private double _z0 = 3;
 
-    private const double A = 5e13;
+    private double _a = Math.Pow(5, 13);
 
-    private const double C = 2e31;
+    private double _c = Math.Pow(2, 31);
 
     private double _currentZ;
 
@@ -17,7 +17,7 @@ public class UniformDistributionGenerator : IGenerator
     
     public double GenerateNumber()
     {
-        _currentZ = A * (_currentZ % C) / C;
+        _currentZ = _a * (_currentZ % _c) / _c;
         return _currentZ;
     }
 

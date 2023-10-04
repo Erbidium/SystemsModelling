@@ -2,7 +2,7 @@
 
 public static class StatsCalculator
 {
-    public static (double average, double variance)GetStats(List<double> numbersSequence)
+    public static (double average, double variance) GetStats(List<double> numbersSequence)
     {
         double average = numbersSequence.Average();
         double variance = numbersSequence.Sum(number => Math.Pow(number - average, 2))
