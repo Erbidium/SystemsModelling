@@ -1,33 +1,31 @@
 ﻿using Lab1.Generators;
+using Lab1.Models;
 using MathNet.Numerics.Distributions;
 
 namespace Lab1;
 
 public static class DistributionTest
 {
-    public static double ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters, int intervalsCount)
+    public static ChiSquaredTestModel ChiSquaredTest(List<double> numbersSequence, IGenerator generator, int numberOfDistributionLawParameters, int intervalsCount)
     {
         double min = numbersSequence.Min();
         double max = numbersSequence.Max();
-        
         double intervalWidth = (max - min) / intervalsCount;
 
         int[] intervals = CreateIntervals();
-
         var mergedIntervals = MergeIntervals(intervals, 5);
-
         double calculatedChiSquared = GetChiSquared();
 
-        Console.WriteLine($"Intervals count: {mergedIntervals.Count}");
-        Console.WriteLine($"X2: {calculatedChiSquared}");
-
         int degreesOfFreedom = mergedIntervals.Count - 1 - numberOfDistributionLawParameters;
-
         (double confidenceChance, double tableChiSquared) = FindBestConfidenceChance(calculatedChiSquared, degreesOfFreedom);
 
-        Console.WriteLine($"Table X2: {tableChiSquared},  confidence chance: {confidenceChance}");
-
-        return confidenceChance;
+        return new ChiSquaredTestModel
+        {
+            IntervalsCount = mergedIntervals.Count,
+            CalculatedChiSquared = calculatedChiSquared,
+            TableChiSquared = tableChiSquared,
+            ConfidenceChance = confidenceChance
+        };
 
         int[] CreateIntervals()
         {
