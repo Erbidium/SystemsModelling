@@ -15,13 +15,12 @@ public class Element {
 
     private IDelay _delay;
     
-    private static int _nextId;
+    
 
     protected Element(IDelay delay)
     {
         _delay = delay;
-        Id = _nextId;
-        _nextId++;
+        Id = IdentifierGenerator.GetId();
         Name = $"element{Id}";
     }
 
@@ -36,8 +35,8 @@ public class Element {
     public void PrintResult()
         => Console.WriteLine($"{Name} quantity = {Quantity}");
 
-    public void PrintInfo()
-        => Console.WriteLine($"{Name} state= {State} quantity = {Quantity} tnext= {TimeNext}");
+    public virtual void PrintInfo()
+        => Console.WriteLine($"{Name} State = {State} Quantity = {Quantity} TimeNext = {TimeNext}");
     
-    public void DoStatistics(double delta){ }
+    public virtual void DoStatistics(double delta){ }
 }
