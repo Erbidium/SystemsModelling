@@ -1,18 +1,25 @@
 ﻿using Lab2;
+using Lab2.Delay;
+using Lab2.Elements;
 
-var c = new Create(2.0);
-var p = new Process(1.0);
+var createDelay = new ExponentialDelay(2);
+var processDelay = new ExponentialDelay(1);
 
-Console.WriteLine($"Id0 = {c.Id}  Id1 = {p.Id}");
+var process = new Process(processDelay)
+{
+    Name = "PROCESSOR",
+    MaxQueue = 5
+};
 
-c.NextElement = p;
-p.MaxQueue = 5;
-c.Name = "CREATOR";
-p.Name = "PROCESSOR";
-c.Distribution = "exp";
-p.Distribution = "exp";
+var create = new Create(createDelay)
+{
+    Name = "CREATOR",
+    NextElement = process
+};
 
-var list = new List<Element>{ c, p };
+Console.WriteLine($"Id0 = {create.Id}  Id1 = {process.Id}");
 
-var model = new Model(list);
+var elements = new List<Element>{ create, process };
+
+var model = new Model(elements);
 model.Simulate(1000);

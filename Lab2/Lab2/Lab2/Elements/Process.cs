@@ -1,4 +1,6 @@
-﻿namespace Lab2;
+﻿using Lab2.Delay;
+
+namespace Lab2.Elements;
 
 public class Process : Element
 {
@@ -7,7 +9,7 @@ public class Process : Element
     public int Failure { get; set; }
     public int MaxQueue { get; set; }
     public double MeanQueue { get; set; }
-    public Process(double delay) : base(delay)
+    public Process(IDelay delay) : base(delay)
         => MaxQueue = int.MaxValue;
     
     public override void InAct()

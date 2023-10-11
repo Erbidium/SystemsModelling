@@ -1,4 +1,6 @@
-﻿namespace Lab2;
+﻿using Lab2.Delay;
+
+namespace Lab2.Elements;
 
 public class Element {
     public int Id { get; }
@@ -6,41 +8,30 @@ public class Element {
     public double TimeCurrent { get; set; }
     public double TimeNext { get; protected set; }
     public double DelayDeviation { get; }
-    public string Distribution { get; set; }
     public int Quantity { get; private set; }
     public Element? NextElement { get; set; }
     
     protected int State { get; set; }
 
-    private readonly double _delayMean;
+    private IDelay _delay;
     
     private static int _nextId;
 
-    protected Element(double delay)
+    protected Element(IDelay delay)
     {
-        _delayMean = delay;
-        Distribution = "exp";
+        _delay = delay;
         Id = _nextId;
         _nextId++;
-        Name = "element"+ Id;
+        Name = $"element{Id}";
     }
 
     protected double GetDelay()
-    {
-        return Distribution.ToLower() switch
-        {
-            "exp" => FunRand.Exponential(_delayMean),
-            "norm" => FunRand.Normal(_delayMean, DelayDeviation),
-            "unif" => FunRand.Uniform(_delayMean, DelayDeviation),
-            _ => _delayMean
-        };
-    }
+        => _delay.Generate();
     
     public virtual void InAct() { }
     
-    public virtual void OutAct(){
-        Quantity++;
-    }
+    public virtual void OutAct()
+        => Quantity++;
 
     public void PrintResult()
         => Console.WriteLine($"{Name} quantity = {Quantity}");

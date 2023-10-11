@@ -1,4 +1,6 @@
-﻿namespace Lab2;
+﻿using Lab2.Elements;
+
+namespace Lab2;
 
 public class Model {
     private readonly List<Element> _elements;
