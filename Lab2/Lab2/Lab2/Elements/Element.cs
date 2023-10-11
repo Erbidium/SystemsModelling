@@ -1,4 +1,4 @@
-﻿using Lab2.Delay;
+﻿using Lab2.Delays;
 
 namespace Lab2.Elements;
 
@@ -7,7 +7,7 @@ public class Element {
     public string Name { get; set; }
     public double TimeCurrent { get; set; }
     public double TimeNext { get; protected set; }
-    public double DelayDeviation { get; }
+
     public int Quantity { get; private set; }
     public Element? NextElement { get; set; }
     

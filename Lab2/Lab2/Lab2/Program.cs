@@ -1,5 +1,5 @@
 ﻿using Lab2;
-using Lab2.Delay;
+using Lab2.Delays;
 using Lab2.Elements;
 
 var createDelay = new ExponentialDelay(2);

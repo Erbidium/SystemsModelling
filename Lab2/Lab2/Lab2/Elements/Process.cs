@@ -1,4 +1,4 @@
-﻿using Lab2.Delay;
+﻿using Lab2.Delays;
 
 namespace Lab2.Elements;
 

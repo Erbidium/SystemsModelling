@@ -1,4 +1,4 @@
-﻿namespace Lab2.Delay;
+﻿namespace Lab2.Delays;
 
 public interface IDelay
 {
