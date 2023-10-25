@@ -6,9 +6,9 @@ public class Create : Element {
     public Create(IDelay delay) : base(delay)
         => TimeNext = 0.0; // імітація розпочнеться з події Create
 
-    public override void OutAct() {
-        base.OutAct();
+    public override void Exit() {
+        base.Exit();
         TimeNext = TimeCurrent + GetDelay();
-        NextElement?.InAct();
+        NextElement?.Enter();
     }
 }

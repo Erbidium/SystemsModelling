@@ -8,15 +8,13 @@ public class Element {
     public double TimeCurrent { get; set; }
     public double TimeNext { get; protected set; }
 
-    public int Quantity { get; private set; }
+    public int ServedElementsQuantity { get; private set; }
     public Element? NextElement { get; set; }
     
-    protected int State { get; set; }
+    protected bool IsServing { get; set; }
 
     private IDelay _delay;
     
-    
-
     protected Element(IDelay delay)
     {
         _delay = delay;
@@ -27,16 +25,16 @@ public class Element {
     protected double GetDelay()
         => _delay.Generate();
     
-    public virtual void InAct() { }
+    public virtual void Enter() { }
     
-    public virtual void OutAct()
-        => Quantity++;
+    public virtual void Exit()
+        => ServedElementsQuantity++;
 
     public void PrintResult()
-        => Console.WriteLine($"{Name} quantity = {Quantity}");
+        => Console.WriteLine($"{Name} quantity = {ServedElementsQuantity}");
 
     public virtual void PrintInfo()
-        => Console.WriteLine($"{Name} State = {State} Quantity = {Quantity} TimeNext = {TimeNext}");
+        => Console.WriteLine($"{Name} is {(IsServing ? "serving" : "waiting")}. Quantity = {ServedElementsQuantity} TimeNext = {TimeNext}");
     
     public virtual void DoStatistics(double delta){ }
 }

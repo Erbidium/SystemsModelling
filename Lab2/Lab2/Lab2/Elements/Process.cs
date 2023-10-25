@@ -6,17 +6,27 @@ public class Process : Element
 {
     public int Queue { get; set; }
     
-    public int Failure { get; set; }
-    public int MaxQueue { get; set; }
-    public double MeanQueue { get; set; }
-    public Process(IDelay delay) : base(delay)
-        => MaxQueue = int.MaxValue;
+    public int Failure { get; private set; }
+    public int MaxQueue { get; init; } = int.MaxValue;
+    public double MeanQueue { get; private set; }
     
-    public override void InAct()
+    public double LoadTime { get; private set; }
+
+    public List<Device> Devices { get; } = new();
+
+    public Process(int devicesCount, IDelay delay) : base(delay)
     {
-        if (State == 0)
+        for (int i = 0; i < devicesCount; i++)
         {
-            State = 1;
+            Devices.Add(new Device(i));
+        }
+    }
+    
+    public override void Enter()
+    {
+        if (!IsServing)
+        {
+            IsServing = true;
             TimeNext = TimeCurrent + GetDelay();
         }
         else if (Queue < MaxQueue)
@@ -29,25 +39,29 @@ public class Process : Element
         }
     }
 
-    public override void OutAct()
+    public override void Exit()
     {
-        base.OutAct();
+        base.Exit();
         TimeNext = double.MaxValue;
-        State = 0;
+        IsServing = false;
         if (Queue > 0)
         {
             Queue--;
-            State = 1;
+            IsServing = true;
             TimeNext = TimeCurrent + GetDelay();
         }
     }
     
-    public void PrintInfo()
+    public override void PrintInfo()
     {
         base.PrintInfo();
         Console.WriteLine("Failure = " + Failure);
     }
-    
-    public void DoStatistics(double delta)
-        => MeanQueue += Queue * delta;
+
+    public override void DoStatistics(double delta)
+    {
+        MeanQueue += Queue * delta;
+        if (IsServing)
+            LoadTime += delta;
+    }
 }

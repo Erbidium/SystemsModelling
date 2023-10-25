@@ -16,38 +16,21 @@ public class Model {
 
     public void Simulate(double time)
     {
-        while (_timeCurrent < time) {
-            _timeNext = double.MaxValue;
-            foreach (var element in _elements)
-            {
-                if (element.TimeNext < _timeNext)
-                {
-                    _timeNext = element.TimeNext;
-                    _elementId = element.Id;
-                }
-            }
+        while (_timeCurrent < time)
+        {
+            _timeNext = _elements.Select(e => e.TimeNext).Min();
             
-            Console.WriteLine($"\nIt's time for event in {_elements[_elementId].Name}, time = {_timeNext}");
-            
-            foreach (var element in _elements)
-            {
-                element.DoStatistics(_timeNext - _timeCurrent);
-            }
+            _elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
             
             _timeCurrent = _timeNext;
 
-            foreach (var element in _elements)
-            {
-                element.TimeCurrent = _timeCurrent;
-            }
-            
-            _elements[_elementId].OutAct();
+            _elements.ForEach(e => e.TimeCurrent = _timeCurrent);
 
             foreach (var element in _elements)
             {
                 if (element.TimeNext == _timeCurrent)
                 {
-                    element.OutAct();
+                    element.Exit();
                 }
             }
             
@@ -75,7 +58,8 @@ public class Model {
                 continue;
             
             Console.WriteLine($"Mean length of queue = {process.MeanQueue / _timeCurrent}");
-            Console.WriteLine($"Failure probability = {process.Failure / (double) process.Quantity}");
+            Console.WriteLine($"Failure probability = {process.Failure / (double) process.ServedElementsQuantity}");
+            Console.WriteLine($"Average loading time: {process.LoadTime / _timeCurrent}");
         }
     }
 }
