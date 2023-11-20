@@ -6,12 +6,12 @@ public class Element {
     public int Id { get; }
     public string Name { get; set; }
     public double TimeCurrent { get; set; }
-    public double TimeNext { get; protected set; }
+    public virtual double TimeNext { get; protected set; }
 
-    public int ServedElementsQuantity { get; private set; }
+    public int ServedElementsQuantity { get; protected set; }
     public Element? NextElement { get; set; }
     
-    protected bool IsServing { get; set; }
+    public bool IsServing { get; set; }
 
     private IDelay _delay;
     

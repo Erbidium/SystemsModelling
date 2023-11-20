@@ -1,13 +1,21 @@
-﻿namespace Lab2.Elements;
+﻿using Lab2.Delays;
 
-public class Device
+namespace Lab2.Elements;
+
+public class Device : Element
 {
-    public int Id { get; set; }
-
-    public double TimeNext { get; private set; } = double.MaxValue;
-
-    public Device(int id)
+    public Device(IDelay delay) : base(delay) { }
+    
+    public override void Enter()
     {
-        Id = id;
+        IsServing = true;
+        TimeNext = TimeCurrent + GetDelay();
+    }
+
+    public override void Exit()
+    {
+        IsServing = false;
+        TimeNext = double.MaxValue;
+        base.Exit();
     }
 }

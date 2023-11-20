@@ -9,8 +9,6 @@ public class Model {
     
     private double _timeCurrent;
     
-    private int _elementId;
-    
     public Model(List<Element> elements)
         => _elements = elements;
 

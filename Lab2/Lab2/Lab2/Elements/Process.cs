@@ -12,22 +12,26 @@ public class Process : Element
     
     public double LoadTime { get; private set; }
 
-    public List<Device> Devices { get; } = new();
+    private List<Device> Devices { get; } = new();
+    
+    public override double TimeNext => Devices.Count > 0 ? Devices.Min(d => d.TimeNext) : double.MaxValue;
+
+    public new bool IsServing => Devices.Any(d => d.IsServing);
+
+    public bool IsFull => Devices.All(d => d.IsServing);
 
     public Process(int devicesCount, IDelay delay) : base(delay)
     {
         for (int i = 0; i < devicesCount; i++)
-        {
-            Devices.Add(new Device(i));
-        }
+            Devices.Add(new Device(delay));
     }
     
     public override void Enter()
     {
-        if (!IsServing)
+        if (!IsFull)
         {
-            IsServing = true;
-            TimeNext = TimeCurrent + GetDelay();
+            var freeDevice = Devices.First(d => !d.IsServing);
+            freeDevice.Enter();
         }
         else if (Queue < MaxQueue)
         {
@@ -41,15 +45,22 @@ public class Process : Element
 
     public override void Exit()
     {
-        base.Exit();
-        TimeNext = double.MaxValue;
-        IsServing = false;
-        if (Queue > 0)
+        var finishedDevices = Devices.FindAll(d => d.TimeNext == TimeNext);
+        
+        ServedElementsQuantity += finishedDevices.Count;
+
+        foreach (var device in finishedDevices)
         {
-            Queue--;
-            IsServing = true;
-            TimeNext = TimeCurrent + GetDelay();
+            device.Exit();
+            
+            if (Queue > 0)
+            {
+                Queue--;
+                device.Enter();
+            }
         }
+        
+        NextElement?.Enter();
     }
     
     public override void PrintInfo()
