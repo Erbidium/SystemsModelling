@@ -13,6 +13,21 @@ public class Process : Element
     public double LoadTime { get; private set; }
 
     private List<Device> Devices { get; } = new();
+
+    private double _timeCurrent;
+
+    public override double TimeCurrent
+    {
+        get => _timeCurrent;
+        set
+        {
+            _timeCurrent = value;
+            foreach (var device in Devices)
+            {
+                device.TimeCurrent = value;
+            }
+        }
+    }
     
     public override double TimeNext => Devices.Count > 0 ? Devices.Min(d => d.TimeNext) : double.MaxValue;
 
