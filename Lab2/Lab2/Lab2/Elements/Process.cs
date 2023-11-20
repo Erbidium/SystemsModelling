@@ -31,7 +31,7 @@ public class Process : Element
     
     public override double TimeNext => Devices.Count > 0 ? Devices.Min(d => d.TimeNext) : double.MaxValue;
 
-    public new bool IsServing => Devices.Any(d => d.IsServing);
+    public override bool IsServing => Devices.Any(d => d.IsServing);
 
     public bool IsFull => Devices.All(d => d.IsServing);
 

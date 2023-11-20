@@ -11,4 +11,6 @@ public sealed class Create : Element {
         TimeNext = TimeCurrent + GetDelay();
         NextElement?.NextElement?.Enter();
     }
+
+    public override void DoStatistics(double delta) { }
 }

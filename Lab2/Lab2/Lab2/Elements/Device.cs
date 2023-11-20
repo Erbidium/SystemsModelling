@@ -18,4 +18,6 @@ public class Device : Element
         TimeNext = double.MaxValue;
         base.Exit();
     }
+
+    public override void DoStatistics(double delta) { }
 }

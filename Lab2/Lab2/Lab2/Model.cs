@@ -32,6 +32,8 @@ public class Model {
                 }
             }
             
+            Console.WriteLine($"-----Current time: {_timeCurrent}----");
+            
             PrintInfo();
         }
         PrintResult();
