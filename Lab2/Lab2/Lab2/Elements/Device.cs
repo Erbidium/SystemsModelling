@@ -2,9 +2,12 @@
 
 namespace Lab2.Elements;
 
-public class Device : Element
+public sealed class Device : Element
 {
-    public Device(IDelay delay) : base(delay) { }
+    public Device(IDelay delay) : base(delay)
+    {
+        TimeNext = double.MaxValue;
+    }
     
     public override void Enter()
     {

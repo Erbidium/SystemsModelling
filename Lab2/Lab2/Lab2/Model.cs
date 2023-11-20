@@ -24,15 +24,16 @@ public class Model {
 
             _elements.ForEach(e => e.TimeCurrent = _timeCurrent);
 
+            Console.WriteLine($"-----Current time: {_timeCurrent}----");
+            
             foreach (var element in _elements)
             {
                 if (element.TimeNext == _timeCurrent)
                 {
+                    Console.WriteLine($"Next event will be in element {element.Name}");
                     element.Exit();
                 }
             }
-            
-            Console.WriteLine($"-----Current time: {_timeCurrent}----");
             
             PrintInfo();
         }
