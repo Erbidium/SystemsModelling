@@ -60,7 +60,7 @@ public class Process : Element
             }
         }
         
-        NextElement.NextElement?.Enter();
+        NextElement?.NextElement?.Enter();
     }
     
     public override void PrintInfo()

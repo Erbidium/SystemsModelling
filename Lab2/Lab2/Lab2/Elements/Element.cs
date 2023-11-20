@@ -10,7 +10,7 @@ public class Element {
     public virtual double TimeNext { get; protected set; }
 
     public int ServedElementsQuantity { get; protected set; }
-    public INextElement NextElement { get; set; } = null!;
+    public INextElement? NextElement { get; set; } = null!;
     
     public bool IsServing { get; set; }
 
