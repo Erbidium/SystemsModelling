@@ -38,8 +38,8 @@ public static class ModelCreator
     
     public static Model GetThreeProcessesModelWithMultipleDevices()
     {
-        var createDelay = new ExponentialDelay(2);
-        var processDelay = new ExponentialDelay(1);
+        var createDelay = new ExponentialDelay(1);
+        var processDelay = new ExponentialDelay(4);
 
         var create = new Create(createDelay) { Name = "CREATOR" };
 
