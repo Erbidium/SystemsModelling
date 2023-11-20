@@ -56,8 +56,9 @@ public class Model {
                 continue;
             
             Console.WriteLine($"Mean length of queue = {process.MeanQueue / _timeCurrent}");
-            Console.WriteLine($"Failure probability = {process.Failure / (double) process.ServedElementsQuantity}");
+            Console.WriteLine($"Failure probability = {process.Failure / (double) (process.Failure + process.ServedElementsQuantity)}");
             Console.WriteLine($"Average loading time: {process.LoadTime / _timeCurrent}");
+            Console.WriteLine($"Average serving time: {process.LoadTime / process.ServedElementsQuantity}");
         }
     }
 }
