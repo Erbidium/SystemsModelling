@@ -1,6 +1,7 @@
 ﻿using Lab2;
 using Lab2.Delays;
 using Lab2.Elements;
+using Lab2.NextElement;
 
 const int simulationTime = 1000;
 
@@ -13,9 +14,9 @@ var process1 = new Process(1, processDelay) { Name = "PROCESSOR1", MaxQueue = 5 
 var process2 = new Process(1, processDelay) { Name = "PROCESSOR2", MaxQueue = 5 };
 var process3 = new Process(1, processDelay) { Name = "PROCESSOR3", MaxQueue = 5 };
 
-create.NextElement = process1;
-process1.NextElement = process2;
-process2.NextElement = process3;
+create.NextElement = new OneNextElement(process1);
+process1.NextElement = new OneNextElement(process2);
+process2.NextElement = new OneNextElement(process3);
 
-var model = new Model(new (){ create, process1, process2, process3 });
+var model = new Model(new List<Element> { create, process1, process2, process3 });
 model.Simulate(simulationTime);

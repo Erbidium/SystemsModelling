@@ -1,4 +1,5 @@
 ﻿using Lab2.Delays;
+using Lab2.NextElement;
 
 namespace Lab2.Elements;
 
@@ -9,7 +10,7 @@ public class Element {
     public virtual double TimeNext { get; protected set; }
 
     public int ServedElementsQuantity { get; protected set; }
-    public Element? NextElement { get; set; }
+    public INextElement NextElement { get; set; } = null!;
     
     public bool IsServing { get; set; }
 

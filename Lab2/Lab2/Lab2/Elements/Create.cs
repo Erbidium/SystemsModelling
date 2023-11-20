@@ -9,6 +9,6 @@ public class Create : Element {
     public override void Exit() {
         base.Exit();
         TimeNext = TimeCurrent + GetDelay();
-        NextElement?.Enter();
+        NextElement.NextElement?.Enter();
     }
 }
