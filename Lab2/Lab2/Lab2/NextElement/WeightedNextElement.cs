@@ -22,7 +22,9 @@ public class WeightedNextElement : INextElement
                 chancesAccumulatedSum += NextElementChances[i].Chance;
                 if (chancesAccumulatedSum > chanceGeneratedValue)
                 {
-                    return NextElementChances[i].Element;
+                    var element = NextElementChances[i].Element;
+                    Console.WriteLine($"To element {element.Name}");
+                    return element;
                 }
             }
             return null;
