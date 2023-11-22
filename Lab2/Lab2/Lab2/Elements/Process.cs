@@ -8,9 +8,10 @@ public class Process : Element
     
     public int Failure { get; private set; }
     public int MaxQueue { get; init; } = int.MaxValue;
-    public double MeanQueue { get; private set; }
     
+    public double MeanQueue { get; private set; }
     public double LoadTime { get; private set; }
+    public double MeanWorkingDevices { get; private set; }
 
     private List<Device> Devices { get; } = new();
 
@@ -77,17 +78,27 @@ public class Process : Element
         
         NextElement?.NextElement?.Enter();
     }
+
+    public override void PrintResult()
+    {
+        base.PrintResult();
+        Console.WriteLine("Failure quantity = " + Failure);
+    }
     
     public override void PrintInfo()
     {
         base.PrintInfo();
-        Console.WriteLine("Failure = " + Failure);
+        Console.WriteLine("Failure quantity = " + Failure);
     }
 
     public override void DoStatistics(double delta)
     {
         MeanQueue += Queue * delta;
-        if (IsServing)
-            LoadTime += delta;
+        
+        if (!IsServing)
+            return;
+        
+        MeanWorkingDevices += Devices.Count(d => d.IsServing) * delta;
+        LoadTime += delta;
     }
 }

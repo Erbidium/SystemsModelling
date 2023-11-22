@@ -62,6 +62,7 @@ public class Model {
             Console.WriteLine($"Failure probability = {process.Failure / (double) (process.Failure + process.ServedElementsQuantity)}");
             Console.WriteLine($"Average loading time: {process.LoadTime / _timeCurrent}");
             Console.WriteLine($"Average serving time: {process.LoadTime / process.ServedElementsQuantity}");
+            Console.WriteLine($"Average working devices: {process.MeanWorkingDevices / _timeCurrent}");
         }
     }
 }

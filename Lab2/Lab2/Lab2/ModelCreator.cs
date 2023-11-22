@@ -38,14 +38,17 @@ public static class ModelCreator
     
     public static Model GetThreeProcessesModelWithMultipleDevices()
     {
-        var createDelay = new ExponentialDelay(1);
-        var processDelay = new ExponentialDelay(4);
+        var createDelay = new ExponentialDelay(2);
+        
+        var process1Delay = new ExponentialDelay(3);
+        var process2Delay = new ExponentialDelay(2);
+        var process3Delay = new ExponentialDelay(3.5);
 
         var create = new Create(createDelay) { Name = "CREATOR" };
 
-        var process1 = new Process(3, processDelay) { Name = "PROCESSOR1", MaxQueue = 5 };
-        var process2 = new Process(3, processDelay) { Name = "PROCESSOR2", MaxQueue = 5 };
-        var process3 = new Process(3, processDelay) { Name = "PROCESSOR3", MaxQueue = 5 };
+        var process1 = new Process(3, process1Delay) { Name = "PROCESSOR1", MaxQueue = 5 };
+        var process2 = new Process(1, process2Delay) { Name = "PROCESSOR2", MaxQueue = 5 };
+        var process3 = new Process(2, process3Delay) { Name = "PROCESSOR3", MaxQueue = 5 };
 
         create.NextElement = new OneNextElement(process1);
         process1.NextElement = new OneNextElement(process2);

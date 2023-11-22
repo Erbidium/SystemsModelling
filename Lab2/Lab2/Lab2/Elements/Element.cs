@@ -31,7 +31,7 @@ public abstract class Element {
     public virtual void Exit()
         => ServedElementsQuantity++;
 
-    public void PrintResult()
+    public virtual void PrintResult()
         => Console.WriteLine($"{Name} served quantity = {ServedElementsQuantity}");
 
     public virtual void PrintInfo()
