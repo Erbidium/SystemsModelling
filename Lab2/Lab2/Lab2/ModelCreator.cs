@@ -22,8 +22,8 @@ public static class ModelCreator
     
     public static Model GetThreeProcessesModel()
     {
-        var createDelay = new ExponentialDelay(2);
-        var processDelay = new ExponentialDelay(1);
+        var createDelay = new ExponentialDelay(1);
+        var processDelay = new ExponentialDelay(2);
 
         var create = new Create(createDelay) { Name = "CREATOR" };
 
@@ -61,8 +61,8 @@ public static class ModelCreator
     
     public static Model GetThreeProcessesModelWithMultipleDevicesAndWeightedNextElements()
     {
-        var createDelay = new ExponentialDelay(2);
-        var processDelay = new ExponentialDelay(1);
+        var createDelay = new ExponentialDelay(1);
+        var processDelay = new ExponentialDelay(2);
 
         var create = new Create(createDelay) { Name = "CREATOR" };
 
