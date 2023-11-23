@@ -9,11 +9,13 @@ public static class ModelCreator
     public static Model GetOneProcessModel()
     {
         var createDelay = new ExponentialDelay(1);
-        var processDelay = new ExponentialDelay(1);
+        var processDelay = new ExponentialDelay(2);
 
         var create = new Create(createDelay) { Name = "CREATOR" };
 
         var process = new Process(1, processDelay) { Name = "PROCESSOR", MaxQueue = 5 };
+        
+        create.NextElement = new OneNextElement(process);
 
         return new Model(new List<Element> { create, process });
     }
