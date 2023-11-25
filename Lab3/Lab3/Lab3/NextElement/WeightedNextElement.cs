@@ -1,11 +1,11 @@
-﻿using Lab2.Elements;
+﻿using Lab3.Elements;
 
-namespace Lab2.NextElement;
+namespace Lab3.NextElement;
 
 public class WeightedNextElement : INextElement
 {
 
-    public List<(Element Element, double Chance)> NextElementChances = new();
+    public List<(Lab3.Elements.Element Element, double Chance)> NextElementChances = new();
     
     private readonly Random _rand = new();
 

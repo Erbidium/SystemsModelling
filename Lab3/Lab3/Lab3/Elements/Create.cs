@@ -1,6 +1,6 @@
-﻿using Lab2.Delays;
+﻿using Lab3.Delays;
 
-namespace Lab2.Elements;
+namespace Lab3.Elements;
 
 public sealed class Create : Element {
     public Create(IDelay delay) : base(delay)

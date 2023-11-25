@@ -1,6 +1,6 @@
-﻿using Lab2.Elements;
+﻿using Lab3.Elements;
 
-namespace Lab2;
+namespace Lab3;
 
 public class Model {
     private readonly List<Element> _elements;

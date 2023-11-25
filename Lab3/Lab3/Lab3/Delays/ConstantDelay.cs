@@ -1,4 +1,4 @@
-﻿namespace Lab2.Delays;
+﻿namespace Lab3.Delays;
 
 public class ConstantDelay : IDelay
 {

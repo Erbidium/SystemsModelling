@@ -1,6 +1,6 @@
-﻿using Lab2.Elements;
+﻿using Lab3.Elements;
 
-namespace Lab2.NextElement;
+namespace Lab3.NextElement;
 
 public interface INextElement
 {

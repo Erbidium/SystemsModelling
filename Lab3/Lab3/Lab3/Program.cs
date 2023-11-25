@@ -1,4 +1,4 @@
-﻿using Lab2;
+﻿using Lab3;
 
 const int simulationTime = 1000;
 

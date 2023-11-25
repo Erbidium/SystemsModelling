@@ -1,7 +1,7 @@
-﻿using Lab2.Delays;
-using Lab2.NextElement;
+﻿using Lab3.Delays;
+using Lab3.NextElement;
 
-namespace Lab2.Elements;
+namespace Lab3.Elements;
 
 public abstract class Element {
     private int Id { get; }
