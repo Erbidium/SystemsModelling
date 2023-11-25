@@ -7,7 +7,7 @@ public abstract class Element {
     private int Id { get; }
     public string Name { get; set; }
     public virtual double TimeCurrent { get; set; }
-    public virtual double TimeNext { get; protected set; }
+    public virtual double TimeNext { get; set; }
 
     public int ServedElementsQuantity { get; protected set; }
     public INextElement? NextElement { get; set; }
