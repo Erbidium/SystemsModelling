@@ -15,7 +15,7 @@ public class SystemMO : Element
     public double LoadTime { get; private set; }
     public double MeanWorkingDevices { get; private set; }
 
-    private List<Device> Devices { get; } = new();
+    public List<Device> Devices { get; } = new();
 
     private double _timeCurrent;
 
