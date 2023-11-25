@@ -1,14 +1,10 @@
 ﻿using Lab3.Delays;
+using Lab3.Queues;
 
 namespace Lab3.Elements;
 
 public class SystemMO : Element
 {
-    private int _queue;
-
-    public override int Queue => _queue;
-    public override int MaxQueue { get; }
-
     public int Failure { get; private set; }
     
     public double MeanQueue { get; private set; }
@@ -38,11 +34,8 @@ public class SystemMO : Element
 
     public override bool IsFull => Devices.All(d => d.IsServing);
 
-    public SystemMO(IDelay delay, int devicesCount, int queue, int maxQueue = int.MaxValue) : base(delay)
+    public SystemMO(IDelay delay, int devicesCount) : base(delay)
     {
-        MaxQueue = maxQueue;
-        _queue = queue;
-        
         for (int i = 0; i < devicesCount; i++)
             Devices.Add(new Device(delay));
     }
@@ -54,9 +47,9 @@ public class SystemMO : Element
             var freeDevice = Devices.First(d => !d.IsServing);
             freeDevice.Enter();
         }
-        else if (Queue < MaxQueue)
+        else if (Queue.Count < Queue.MaxCount)
         {
-            _queue++;
+            Queue.Add();
         }
         else
         {
@@ -74,9 +67,9 @@ public class SystemMO : Element
         {
             device.Exit();
             
-            if (Queue > 0)
+            if (Queue.Count > 0)
             {
-                _queue--;
+                Queue.Remove();
                 device.Enter();
             }
         }
@@ -98,7 +91,7 @@ public class SystemMO : Element
 
     public override void DoStatistics(double delta)
     {
-        MeanQueue += Queue * delta;
+        MeanQueue += Queue.Count * delta;
         
         if (!IsServing)
             return;

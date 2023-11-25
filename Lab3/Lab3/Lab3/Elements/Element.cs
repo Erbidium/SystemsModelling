@@ -1,5 +1,6 @@
 ﻿using Lab3.Delays;
 using Lab3.NextElement;
+using Lab3.Queues;
 
 namespace Lab3.Elements;
 
@@ -10,11 +11,11 @@ public abstract class Element {
     public virtual double TimeNext { get; set; }
 
     public int ServedElementsQuantity { get; protected set; }
+    
     public INextElementPicker? NextElement { get; set; }
 
-    public virtual int MaxQueue => 0;
-
-    public virtual int Queue => 0;
+    public Queue Queue { get; init; } = new();
+    
     public virtual bool IsServing { get; set; }
 
     public virtual bool IsFull => IsServing;
