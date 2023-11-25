@@ -13,10 +13,10 @@ public static class ModelCreator
 
         var create = new Create(createDelay) { Name = "CREATOR", TimeNext = 0.1 };
 
-        var process1 = new SystemMO(1, processDelay) { Name = "PROCESSOR1", Queue = 2, MaxQueue = 3 };
-        var process2 = new SystemMO(1, processDelay) { Name = "PROCESSOR2", Queue = 2, MaxQueue = 3 };
+        var process1 = new SystemMO(processDelay, 1, 2, 3) { Name = "PROCESSOR1" };
+        var process2 = new SystemMO(processDelay, 1, 2, 3) { Name = "PROCESSOR2" };
 
-        create.NextElement = new PriorityNextElement(new List<(Element Element, int Priority)> { (process1, 1), (process2, 2) });
+        create.NextElement = new PriorityNextElement(new List<(Element Element, int Priority)> { (process1, 2), (process2, 1) });
 
         return new NetMO(new List<Element> { create, process1, process2 });
     }

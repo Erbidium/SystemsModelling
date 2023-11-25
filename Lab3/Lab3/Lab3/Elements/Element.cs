@@ -11,7 +11,10 @@ public abstract class Element {
 
     public int ServedElementsQuantity { get; protected set; }
     public INextElement? NextElement { get; set; }
-    
+
+    public virtual int MaxQueue => 0;
+
+    public virtual int Queue => 0;
     public virtual bool IsServing { get; set; }
 
     public virtual bool IsFull => IsServing;

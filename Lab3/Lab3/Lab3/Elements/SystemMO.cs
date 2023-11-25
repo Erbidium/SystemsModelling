@@ -4,10 +4,12 @@ namespace Lab3.Elements;
 
 public class SystemMO : Element
 {
-    public int Queue { get; set; }
-    
+    private int _queue;
+
+    public override int Queue => _queue;
+    public override int MaxQueue { get; }
+
     public int Failure { get; private set; }
-    public int MaxQueue { get; init; } = int.MaxValue;
     
     public double MeanQueue { get; private set; }
     public double LoadTime { get; private set; }
@@ -36,8 +38,11 @@ public class SystemMO : Element
 
     public override bool IsFull => Devices.All(d => d.IsServing);
 
-    public SystemMO(int devicesCount, IDelay delay) : base(delay)
+    public SystemMO(IDelay delay, int devicesCount, int queue, int maxQueue = int.MaxValue) : base(delay)
     {
+        MaxQueue = maxQueue;
+        _queue = queue;
+        
         for (int i = 0; i < devicesCount; i++)
             Devices.Add(new Device(delay));
     }
@@ -51,7 +56,7 @@ public class SystemMO : Element
         }
         else if (Queue < MaxQueue)
         {
-            Queue++;
+            _queue++;
         }
         else
         {
@@ -71,7 +76,7 @@ public class SystemMO : Element
             
             if (Queue > 0)
             {
-                Queue--;
+                _queue--;
                 device.Enter();
             }
         }

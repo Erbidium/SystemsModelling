@@ -1,4 +1,5 @@
-﻿using Lab3.Elements;
+﻿using System.Diagnostics;
+using Lab3.Elements;
 
 namespace Lab3.NextElement;
 
@@ -22,10 +23,17 @@ public class PriorityNextElement : INextElement
             if (freeElements.Count > 0)
                 return FindElementWithMaxPriority(freeElements);
             
-            var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element is SystemMO p && p.Queue < p.MaxQueue).ToList();
-            
+            var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element.Queue < tuple.Element.MaxQueue).ToList();
+
             if (freeQueues.Count > 0)
-                return FindElementWithMaxPriority(freeQueues);
+            {
+                var minQueueLength = freeQueues
+                    .Select(t => t.Priority)
+                    .Min();
+
+                var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue == minQueueLength).ToList();
+                return FindElementWithMaxPriority(elementsWithMinQueue);
+            }
 
             return _nextElementPriorities.OrderByDescending(tuple => tuple.Priority).Select(t => t.Element).FirstOrDefault();
 
