@@ -4,8 +4,7 @@ namespace Lab3.NextElement;
 
 public class WeightedNextElement : INextElement
 {
-
-    public List<(Lab3.Elements.Element Element, double Chance)> NextElementChances = new();
+    public List<(Element Element, double Chance)> NextElementChances = new();
     
     private readonly Random _rand = new();
 

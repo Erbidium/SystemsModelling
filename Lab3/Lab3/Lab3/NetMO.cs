@@ -2,14 +2,14 @@
 
 namespace Lab3;
 
-public class Model {
+public class NetMO {
     private readonly List<Element> _elements;
     
     private double _timeNext;
     
     private double _timeCurrent;
     
-    public Model(List<Element> elements)
+    public NetMO(List<Element> elements)
         => _elements = elements;
 
     public void Simulate(double time)
@@ -55,7 +55,7 @@ public class Model {
         foreach (var element in _elements) {
             element.PrintResult();
             
-            if (element is not Process process)
+            if (element is not SystemMO process)
                 continue;
             
             Console.WriteLine($"Mean length of queue = {process.MeanQueue / _timeCurrent}");

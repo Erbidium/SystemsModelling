@@ -2,7 +2,7 @@
 
 namespace Lab3.Elements;
 
-public class Process : Element
+public class SystemMO : Element
 {
     public int Queue { get; set; }
     
@@ -34,9 +34,9 @@ public class Process : Element
 
     public override bool IsServing => Devices.Any(d => d.IsServing);
 
-    public bool IsFull => Devices.All(d => d.IsServing);
+    public override bool IsFull => Devices.All(d => d.IsServing);
 
-    public Process(int devicesCount, IDelay delay) : base(delay)
+    public SystemMO(int devicesCount, IDelay delay) : base(delay)
     {
         for (int i = 0; i < devicesCount; i++)
             Devices.Add(new Device(delay));

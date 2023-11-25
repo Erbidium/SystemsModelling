@@ -14,6 +14,8 @@ public abstract class Element {
     
     public virtual bool IsServing { get; set; }
 
+    public virtual bool IsFull => IsServing;
+
     private readonly IDelay _delay;
     
     protected Element(IDelay delay)
