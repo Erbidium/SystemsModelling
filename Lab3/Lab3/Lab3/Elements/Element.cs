@@ -10,7 +10,7 @@ public abstract class Element {
     public virtual double TimeNext { get; set; }
 
     public int ServedElementsQuantity { get; protected set; }
-    public INextElement? NextElement { get; set; }
+    public INextElementPicker? NextElement { get; set; }
 
     public virtual int MaxQueue => 0;
 

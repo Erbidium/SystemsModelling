@@ -2,7 +2,7 @@
 
 namespace Lab3.NextElement;
 
-public class WeightedNextElement : INextElement
+public class WeightedNextElementPicker : INextElementPicker
 {
     public List<(Element Element, double Chance)> NextElementChances = new();
     

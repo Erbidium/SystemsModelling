@@ -2,7 +2,7 @@
 
 namespace Lab3.NextElement;
 
-public interface INextElement
+public interface INextElementPicker
 {
     public Element? NextElement { get; }
 }

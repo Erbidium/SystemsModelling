@@ -2,9 +2,9 @@
 
 namespace Lab3.NextElement;
 
-public class OneNextElement : INextElement
+public class OneNextElementPicker : INextElementPicker
 {
-    public OneNextElement(Element nextElement)
+    public OneNextElementPicker(Element nextElement)
     {
         NextElement = nextElement;
     }

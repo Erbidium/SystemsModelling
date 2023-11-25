@@ -3,13 +3,13 @@ using Lab3.Elements;
 
 namespace Lab3.NextElement;
 
-public class PriorityNextElement : INextElement
+public class PriorityNextElementPicker : INextElementPicker
 {
     private readonly List<(Element Element, int Priority)> _nextElementPriorities;
     
     private readonly Random _rand = new();
     
-    public PriorityNextElement(List<(Element Element, int Priority)> nextElementPriorities)
+    public PriorityNextElementPicker(List<(Element Element, int Priority)> nextElementPriorities)
     {
         _nextElementPriorities = nextElementPriorities;
     }
