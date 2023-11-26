@@ -14,26 +14,21 @@ public static class ModelCreator
 
         var create = new Create(createDelay) { Name = "CARS_CREATOR", TimeNext = 0.1 };
 
-        var smo1 = new SystemMO(processDelay, 1)
-        {
-            Name = "CASHIER1",
-            Queue = new Queue(2, 3)
-        };
-
-        var smo2 = new SystemMO(processDelay, 1)
-        {
-            Name = "CASHIER2",
-            Queue = new Queue(2, 3)
-        };
+        var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
+        var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
 
         smo1.Devices[0].IsServing = true;
+        smo1.Devices[0].TimeNext = processDelay.Generate();
+        
         smo2.Devices[0].IsServing = true;
+        smo2.Devices[0].TimeNext = processDelay.Generate();
 
         create.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
-        
-        smo1.Queue = new BankQueue { OtherElementsWithQueues = { smo2 } };
-        smo2.Queue = new BankQueue { OtherElementsWithQueues = { smo1 } };
 
-        return new NetMO(new List<Element> { create, smo1, smo2 });
+        var elements = new List<Element> { create, smo1, smo2 };
+        smo1.Queue = new BankQueue(2, 3) { Elements = elements };
+        smo2.Queue = new BankQueue(2, 3) { Elements = elements };
+
+        return new NetMO(elements);
     }
 }
