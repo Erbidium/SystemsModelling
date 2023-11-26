@@ -18,10 +18,10 @@ public static class ModelCreator
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
 
         smo1.Devices[0].IsServing = true;
-        smo1.Devices[0].TimeNext = processDelay.Generate();
+        smo1.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
         
         smo2.Devices[0].IsServing = true;
-        smo2.Devices[0].TimeNext = processDelay.Generate();
+        smo2.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
 
         create.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
 
