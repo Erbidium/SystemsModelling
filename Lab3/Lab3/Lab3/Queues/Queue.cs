@@ -6,10 +6,7 @@ public class Queue
 
     public int MaxCount { get; } = int.MaxValue;
     
-    public Queue()
-    {
-        
-    }
+    public Queue() { }
 
     public Queue(int maxCount)
     {
@@ -25,6 +22,7 @@ public class Queue
     public virtual void Add()
     {
         Count++;
+        
     }
 
     public virtual void Remove()

@@ -14,7 +14,7 @@ public abstract class Element {
     
     public INextElementPicker? NextElement { get; set; }
 
-    public Queue Queue { get; init; } = new();
+    public Queue Queue { get; set; } = new();
     
     public virtual bool IsServing { get; set; }
 
