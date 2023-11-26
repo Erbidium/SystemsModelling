@@ -28,7 +28,7 @@ public class PriorityNextElementPicker : INextElementPicker
             if (freeQueues.Count > 0)
             {
                 var minQueueLength = freeQueues
-                    .Select(t => t.Priority)
+                    .Select(t => t.Element.Queue.Count)
                     .Min();
 
                 var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue.Count == minQueueLength).ToList();
@@ -37,8 +37,11 @@ public class PriorityNextElementPicker : INextElementPicker
 
             return _nextElementPriorities.OrderByDescending(tuple => tuple.Priority).Select(t => t.Element).FirstOrDefault();
 
-            Element FindElementWithMaxPriority(IReadOnlyCollection<(Element Element, int Priority)> elements)
+            Element? FindElementWithMaxPriority(IReadOnlyCollection<(Element Element, int Priority)> elements)
             {
+                if (elements.Count == 0)
+                    return null;
+                
                 var maxFreePriority = elements.Select(tuple => tuple.Priority).Max();
                 var freeElementsWithMaxPriority = elements.Where(tuple => tuple.Priority == maxFreePriority).ToList();
                 return freeElementsWithMaxPriority[_rand.Next(freeElementsWithMaxPriority.Count)].Element;
