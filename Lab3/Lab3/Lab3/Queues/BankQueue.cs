@@ -4,32 +4,44 @@ namespace Lab3.Queues;
 
 public class BankQueue : Queue
 {
-    public List<Element> OtherElementsWithQueues { get; } = new();
+    public List<Element> Elements { get; init; } = new();
+    
+    public BankQueue() { }
+
+    public BankQueue(int maxCount) : base(maxCount) { }
+    
+    public BankQueue(int count, int maxCount) : base(count, maxCount) { }
+    
+    public override void Add()
+    {
+        base.Add();
+        OnQueueChanged();
+    }
 
     public override void Remove()
     {
         base.Remove();
-        OnItemRemovedFromQueue();
+        OnQueueChanged();
     }
 
-    private void OnItemRemovedFromQueue()
+    private void OnQueueChanged()
     {
-        while (Count < MaxCount)
+        foreach (var elementWithQueueToFill in Elements)
         {
-            bool elementWasSwapped = false;
-            foreach (var element in OtherElementsWithQueues)
+            if (elementWithQueueToFill.Queue.Count < elementWithQueueToFill.Queue.MaxCount)
             {
-                if (element.Queue.Count == 0 || Count - element.Queue.Count <= 2)
-                    continue;
-                
-                elementWasSwapped = true;
-                Add();
-                element.Queue.Remove();
-                break;
+                foreach (var elementWithExcessiveQueue in Elements)
+                {
+                    if (elementWithExcessiveQueue.Queue.Count > 0 && elementWithExcessiveQueue.Queue.Count - elementWithQueueToFill.Queue.Count >= 2)
+                    {
+                        elementWithExcessiveQueue.Queue.Remove();
+                        elementWithQueueToFill.Queue.Add();
+                    }
+                    
+                    if (elementWithQueueToFill.Queue.Count == elementWithQueueToFill.Queue.MaxCount)
+                        break;
+                }
             }
-
-            if (!elementWasSwapped)
-                break;
         }
     }
 }
