@@ -5,10 +5,20 @@ namespace Lab3.ModelStats;
 public class BankModelStats : IModelStatsPrinter
 {
     private NetMO _model;
+
+    private double _averageClientsCountStat;
     
     public BankModelStats(NetMO model)
     {
         _model = model;
+    }
+
+    public void DoStatistics(double delta)
+    {
+        var cashiers = _model.Elements.OfType<SystemMO>().ToList();
+        int totalClientsCount = cashiers.Sum(c => c.Queue.Count + c.Devices.Count(d => d.IsServing));
+
+        _averageClientsCountStat += totalClientsCount * delta;
     }
     
     public void PrintModelStats(double currentTime)
@@ -24,5 +34,7 @@ public class BankModelStats : IModelStatsPrinter
         double totalClients = cashiers.Sum(c => c.ServedElementsQuantity + c.Failure);
         double failuresSum = cashiers.Sum(c => c.Failure);
         Console.WriteLine($"Failure rate = {failuresSum / totalClients * 100}");
+        
+        Console.WriteLine($"Average clients count in bank: {_averageClientsCountStat / currentTime}");
     }
 }

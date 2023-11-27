@@ -20,6 +20,7 @@ public class NetMO {
             _timeNext = Elements.Select(e => e.TimeNext).Min();
             
             Elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
+            statsPrinter.DoStatistics(_timeCurrent - _timeCurrent);
             
             _timeCurrent = _timeNext;
 
