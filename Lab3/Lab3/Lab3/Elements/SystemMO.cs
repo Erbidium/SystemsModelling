@@ -34,6 +34,8 @@ public class SystemMO : Element
 
     public override bool IsFull => Devices.All(d => d.IsServing);
 
+    public static int QueueChangesCount = 0;
+
     public SystemMO(IDelay delay, int devicesCount) : base(delay)
     {
         for (int i = 0; i < devicesCount; i++)

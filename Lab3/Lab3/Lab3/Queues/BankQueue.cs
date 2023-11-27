@@ -36,6 +36,8 @@ public class BankQueue : Queue
                     {
                         elementWithExcessiveQueue.Queue.Remove();
                         elementWithQueueToFill.Queue.Add();
+
+                        SystemMO.QueueChangesCount++;
                     }
                     
                     if (elementWithQueueToFill.Queue.Count == elementWithQueueToFill.Queue.MaxCount)

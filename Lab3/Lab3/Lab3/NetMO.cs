@@ -1,32 +1,33 @@
 ﻿using Lab3.Elements;
+using Lab3.ModelStats;
 
 namespace Lab3;
 
 public class NetMO {
-    private readonly List<Element> _elements;
+    public List<Element> Elements { get; }
     
     private double _timeNext;
     
     private double _timeCurrent;
     
     public NetMO(List<Element> elements)
-        => _elements = elements;
+        => Elements = elements;
 
-    public void Simulate(double time)
+    public void Simulate(double time, IModelStatsPrinter statsPrinter)
     {
         while (_timeCurrent < time)
         {
-            _timeNext = _elements.Select(e => e.TimeNext).Min();
+            _timeNext = Elements.Select(e => e.TimeNext).Min();
             
-            _elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
+            Elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
             
             _timeCurrent = _timeNext;
 
-            _elements.ForEach(e => e.TimeCurrent = _timeCurrent);
+            Elements.ForEach(e => e.TimeCurrent = _timeCurrent);
 
             Console.WriteLine($"-----Current time: {_timeCurrent}----");
             
-            foreach (var element in _elements)
+            foreach (var element in Elements)
             {
                 if (element.TimeNext == _timeCurrent)
                 {
@@ -38,11 +39,12 @@ public class NetMO {
             PrintInfo();
         }
         PrintResult();
+        statsPrinter.PrintModelStats();
     }
 
     private void PrintInfo()
     {
-        foreach (var element in _elements)
+        foreach (var element in Elements)
         {
             element.PrintInfo();
         }
@@ -52,7 +54,7 @@ public class NetMO {
     {
         Console.WriteLine("\n-------------RESULTS-------------");
         
-        foreach (var element in _elements) {
+        foreach (var element in Elements) {
             element.PrintResult();
             
             if (element is not SystemMO process)
