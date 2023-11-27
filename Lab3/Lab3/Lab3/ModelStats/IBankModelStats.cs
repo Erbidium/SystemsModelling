@@ -16,10 +16,13 @@ public class BankModelStats : IModelStatsPrinter
         Console.WriteLine("Bank model statistics");
         Console.WriteLine($"Queue changes count: {SystemMO.QueueChangesCount}");
 
-        int processedCount = _model.Elements.Count(el => el is SystemMO);
-        int totalServedCount = _model.Elements.Where(el => el is SystemMO).Select(el => el.ServedElementsQuantity).Sum();
-
-        double averageTimeBetweenCarDepartures = processedCount * currentTime / totalServedCount;
+        var cashiers = _model.Elements.OfType<SystemMO>().ToList();
+        
+        double averageTimeBetweenCarDepartures = cashiers.Select(el => currentTime / el.ServedElementsQuantity).Sum();
         Console.WriteLine($"Average time between clients departures from windows: {averageTimeBetweenCarDepartures}");
+
+        double totalClients = cashiers.Sum(c => c.ServedElementsQuantity + c.Failure);
+        double failuresSum = cashiers.Sum(c => c.Failure);
+        Console.WriteLine($"Failure rate = {failuresSum / totalClients * 100}");
     }
 }

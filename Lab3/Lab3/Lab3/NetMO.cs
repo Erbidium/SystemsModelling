@@ -39,7 +39,7 @@ public class NetMO {
             PrintInfo();
         }
         PrintResult();
-        statsPrinter.PrintModelStats();
+        statsPrinter.PrintModelStats(_timeCurrent);
     }
 
     private void PrintInfo()

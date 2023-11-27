@@ -2,5 +2,5 @@
 
 public interface IModelStatsPrinter
 {
-    public void PrintModelStats();
+    public void PrintModelStats(double currentTime);
 }
