@@ -49,6 +49,8 @@ public static class ModelCreator
         var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1){ Name = "LABORATORY_REGISTER" };
         var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2){ Name = "ANALYSIS_IN_LABORATORY" };
 
+        var transferFromLaboratoryToReceptionDepartment = new UniformDelay(2, 5);
+
         arrivalHospitalReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
             new List<(Element Element, PatientType PatientType)>
