@@ -39,28 +39,29 @@ public static class ModelCreator
     {
         // Час між прибуттями в приймальне відділення
         var arrivalHospitalReceptionDepartmentDelay = new ExponentialDelay(15);
-        
-        var processDelay = new ExponentialDelay(0.3);
 
         var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new PatientFactory()) { Name = "PATIENTS_CREATOR" };
-        
-        var doctorsOnDuty = new SystemMO(processDelay, 2)
+        var doctorsOnDuty = new SystemMO(           new ExponentialDelay(0.3)          , 2)
         {
             Name = "DOCTORS_ON_DUTY",
             Queue = new DoctorPriorityQueue(PatientType.ReadyForTreatment)
         };
-
-        var hospitalWard = new SystemMO(processDelay, 1);
-        var laboratory = new SystemMO(processDelay, 1);
+        var hospitalWards = new SystemMO(new UniformDelay(3, 8), 3);
+        var transferFromReceptionDepartmentToLaboratory = new SystemMO(new UniformDelay(2, 5), 1);
+        var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1);
+        var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2);
 
         patientsCreator.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
             new List<(Element Element, PatientType PatientType)>
             {
-                (hospitalWard, PatientType.ReadyForTreatment),
-                (laboratory, PatientType.UndergoPreliminaryExamination),
-                (laboratory, PatientType.JustGotToHospital)
+                (hospitalWards, PatientType.ReadyForTreatment),
+                (transferFromReceptionDepartmentToLaboratory, PatientType.UndergoPreliminaryExamination),
+                (transferFromReceptionDepartmentToLaboratory, PatientType.JustGotToHospital)
             });
+
+        transferFromReceptionDepartmentToLaboratory.NextElement = new OneNextElementPicker(laboratoryRegister);
+        laboratoryRegister.NextElement = new OneNextElementPicker(analysisInLaboratory);
 
         var elements = new List<Element> { patientsCreator, doctorsOnDuty };
 
