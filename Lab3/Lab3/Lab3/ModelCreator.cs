@@ -38,9 +38,7 @@ public static class ModelCreator
     public static NetMO CreateHospitalModel()
     {
         // Час між прибуттями в приймальне відділення
-        var arrivalHospitalReceptionDepartmentDelay = new ExponentialDelay(15);
-
-        var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new PatientFactory()) { Name = "PATIENTS_CREATOR" };
+        var arrivalHospitalReceptionDepartment = new Create(new ExponentialDelay(15), new PatientFactory()) { Name = "PATIENTS_CREATOR" };
         var doctorsOnDuty = new SystemMO(           new ExponentialDelay(0.3)          , 2)
         {
             Name = "DOCTORS_ON_DUTY",
@@ -51,7 +49,7 @@ public static class ModelCreator
         var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1){ Name = "LABORATORY_REGISTER" };
         var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2){ Name = "ANALYSIS_IN_LABORATORY" };
 
-        patientsCreator.NextElement = new OneNextElementPicker(doctorsOnDuty);
+        arrivalHospitalReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
             new List<(Element Element, PatientType PatientType)>
             {
@@ -63,7 +61,7 @@ public static class ModelCreator
         transferFromReceptionDepartmentToLaboratory.NextElement = new OneNextElementPicker(laboratoryRegister);
         laboratoryRegister.NextElement = new OneNextElementPicker(analysisInLaboratory);
 
-        var elements = new List<Element> { patientsCreator, doctorsOnDuty };
+        var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory };
 
         return new NetMO(elements);
     }
