@@ -42,16 +42,16 @@ public class SystemMO : Element
             Devices.Add(new Device(delay));
     }
     
-    public override void Enter()
+    public override void Enter(SimpleItem item)
     {
         if (!IsFull)
         {
             var freeDevice = Devices.First(d => !d.IsServing);
-            freeDevice.Enter();
+            freeDevice.Enter(item);
         }
         else if (Queue.Items.Count < Queue.MaxCount)
         {
-            Queue.Add(new SimpleItem());
+            Queue.Add(item);
         }
         else
         {
@@ -71,12 +71,12 @@ public class SystemMO : Element
             
             if (Queue.Items.Count > 0)
             {
-                Queue.Remove();
-                device.Enter();
+                var itemFromQueue = Queue.Remove();
+                device.Enter(itemFromQueue);
             }
         }
         
-        NextElement?.NextElement(new SimpleItem())?.Enter();
+        NextElement?.NextElement(new SimpleItem())?.Enter(new SimpleItem());
     }
 
     public override void PrintResult()

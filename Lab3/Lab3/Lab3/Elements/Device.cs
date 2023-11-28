@@ -1,4 +1,5 @@
 ﻿using Lab3.Delays;
+using Lab3.Items;
 
 namespace Lab3.Elements;
 
@@ -9,7 +10,7 @@ public sealed class Device : Element
         TimeNext = double.MaxValue;
     }
     
-    public override void Enter()
+    public override void Enter(SimpleItem item)
     {
         IsServing = true;
         TimeNext = TimeCurrent + GetDelay();
