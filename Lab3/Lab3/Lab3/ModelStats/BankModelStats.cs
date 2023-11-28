@@ -4,7 +4,7 @@ namespace Lab3.ModelStats;
 
 public class BankModelStats : IModelStatsPrinter
 {
-    private NetMO _model;
+    private readonly NetMO _model;
 
     private double _averageClientsCountStat;
     
@@ -23,6 +23,7 @@ public class BankModelStats : IModelStatsPrinter
     
     public void PrintModelStats(double currentTime)
     {
+        Console.WriteLine("------------------------");
         Console.WriteLine("Bank model statistics");
         Console.WriteLine($"Queue changes count: {SystemMO.QueueChangesCount}");
 
@@ -33,8 +34,17 @@ public class BankModelStats : IModelStatsPrinter
 
         double totalClients = cashiers.Sum(c => c.ServedElementsQuantity + c.Failure);
         double failuresSum = cashiers.Sum(c => c.Failure);
-        Console.WriteLine($"Failure rate = {failuresSum / totalClients * 100}");
+        Console.WriteLine($"Failure rate = {failuresSum / totalClients * 100} %");
         
         Console.WriteLine($"Average clients count in bank: {_averageClientsCountStat / currentTime}");
+
+        double meanQueueSize = cashiers.Sum(c => c.MeanQueueStat / currentTime) / cashiers.Count;
+        double averageServingTime = cashiers.Sum(c => c.LoadTimeStat / c.ServedElementsQuantity) / cashiers.Count;
+
+        double averageTimeInQueue = averageServingTime * meanQueueSize;
+        double averageTimeInBank = averageTimeInQueue + averageServingTime;
+        
+        Console.WriteLine($"Average time spent by client in bank: {averageTimeInBank}");
+        Console.WriteLine("------------------------");
     }
 }

@@ -20,7 +20,7 @@ public class NetMO {
             _timeNext = Elements.Select(e => e.TimeNext).Min();
             
             Elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
-            statsPrinter.DoStatistics(_timeCurrent - _timeCurrent);
+            statsPrinter.DoStatistics(_timeNext - _timeCurrent);
             
             _timeCurrent = _timeNext;
 
@@ -61,12 +61,12 @@ public class NetMO {
             if (element is not SystemMO process)
                 continue;
             
-            Console.WriteLine($"Mean length of queue = {process.MeanQueue / _timeCurrent}");
+            Console.WriteLine($"Mean length of queue = {process.MeanQueueStat / _timeCurrent}");
             Console.WriteLine($"Failure probability = {process.Failure / (double) (process.Failure + process.ServedElementsQuantity)}");
-            Console.WriteLine($"Failure rate = {process.Failure / (double) (process.Failure + process.ServedElementsQuantity) * 100}");
-            Console.WriteLine($"Average loading: {process.LoadTime / _timeCurrent}");
-            Console.WriteLine($"Average serving time: {process.LoadTime / process.ServedElementsQuantity}");
-            Console.WriteLine($"Average working devices: {process.MeanWorkingDevices / _timeCurrent}");
+            Console.WriteLine($"Failure rate = {process.Failure / (double) (process.Failure + process.ServedElementsQuantity) * 100} %");
+            Console.WriteLine($"Average loading: {process.LoadTimeStat / _timeCurrent}");
+            Console.WriteLine($"Average serving time: {process.LoadTimeStat / process.ServedElementsQuantity}");
+            Console.WriteLine($"Average working devices: {process.MeanWorkingDevicesStat / _timeCurrent}");
         }
     }
 }

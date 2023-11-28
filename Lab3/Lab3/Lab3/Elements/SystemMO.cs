@@ -1,5 +1,4 @@
 ﻿using Lab3.Delays;
-using Lab3.Queues;
 
 namespace Lab3.Elements;
 
@@ -7,9 +6,9 @@ public class SystemMO : Element
 {
     public int Failure { get; private set; }
     
-    public double MeanQueue { get; private set; }
-    public double LoadTime { get; private set; }
-    public double MeanWorkingDevices { get; private set; }
+    public double MeanQueueStat { get; private set; }
+    public double LoadTimeStat { get; private set; }
+    public double MeanWorkingDevicesStat { get; private set; }
 
     public List<Device> Devices { get; } = new();
 
@@ -93,12 +92,12 @@ public class SystemMO : Element
 
     public override void DoStatistics(double delta)
     {
-        MeanQueue += Queue.Count * delta;
+        MeanQueueStat += Queue.Count * delta;
         
         if (!IsServing)
             return;
         
-        MeanWorkingDevices += Devices.Count(d => d.IsServing) * delta;
-        LoadTime += delta;
+        MeanWorkingDevicesStat += Devices.Count(d => d.IsServing) * delta;
+        LoadTimeStat += delta;
     }
 }
