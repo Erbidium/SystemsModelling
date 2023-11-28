@@ -1,4 +1,6 @@
-﻿namespace Lab3.Delays;
+﻿using Lab3.Items;
+
+namespace Lab3.Delays;
 
 public class UniformDelay : IDelay
 {
@@ -13,7 +15,7 @@ public class UniformDelay : IDelay
         _min = min;
     }
     
-    public double Generate()
+    public double Generate(SimpleItem item)
     {
         return _min + _random.NextDouble() * (_max - _min);
     }

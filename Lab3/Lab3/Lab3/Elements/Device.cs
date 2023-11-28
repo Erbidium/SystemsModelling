@@ -15,7 +15,7 @@ public sealed class Device : Element
     public override void Enter(SimpleItem item)
     {
         IsServing = true;
-        TimeNext = TimeCurrent + GetDelay();
+        TimeNext = TimeCurrent + GetDelay(item);
         ProcessedItem = item;
     }
 

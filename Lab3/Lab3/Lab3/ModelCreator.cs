@@ -21,10 +21,10 @@ public static class ModelCreator
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
 
         smo1.Devices[0].IsServing = true;
-        smo1.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
+        smo1.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate(null!);
         
         smo2.Devices[0].IsServing = true;
-        smo2.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
+        smo2.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate(null!);
 
         create.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
 
@@ -39,7 +39,7 @@ public static class ModelCreator
     {
         // Час між прибуттями в приймальне відділення
         var arrivalHospitalReceptionDepartment = new Create(new ExponentialDelay(15), new PatientFactory()) { Name = "PATIENTS_CREATOR" };
-        var doctorsOnDuty = new SystemMO(           new ExponentialDelay(0.3)          , 2)
+        var doctorsOnDuty = new SystemMO(new PatientRegistrationDelay(), 2)
         {
             Name = "DOCTORS_ON_DUTY",
             Queue = new DoctorPriorityQueue(PatientType.ReadyForTreatment)

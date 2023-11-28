@@ -1,4 +1,6 @@
-﻿namespace Lab3.Delays;
+﻿using Lab3.Items;
+
+namespace Lab3.Delays;
 
 public class NormalDelay : IDelay
 {
@@ -13,7 +15,7 @@ public class NormalDelay : IDelay
         _timeDeviation = timeDeviation;
     }
     
-    public double Generate()
+    public double Generate(SimpleItem item)
     {
         return _timeDeviation * GenerateMu() + _timeMean;
     }

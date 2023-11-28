@@ -1,4 +1,6 @@
-﻿namespace Lab3.Delays;
+﻿using Lab3.Items;
+
+namespace Lab3.Delays;
 
 public class ExponentialDelay : IDelay
 {
@@ -9,7 +11,7 @@ public class ExponentialDelay : IDelay
     public ExponentialDelay(double timeMean)
         => _timeMean = timeMean;
     
-    public double Generate()
+    public double Generate(SimpleItem item)
     {
         double randomNumber = 0;
         while (randomNumber == 0)
