@@ -1,4 +1,6 @@
-﻿namespace Lab3.ModelStats;
+﻿using Lab3.Elements;
+
+namespace Lab3.ModelStats;
 
 public class HospitalModelStats : IModelStatsPrinter
 {
@@ -16,6 +18,15 @@ public class HospitalModelStats : IModelStatsPrinter
     
     public void PrintModelStats(double currentTime)
     {
-
+        Console.WriteLine("------------------------");
+        Console.WriteLine("Hospital model statistics");
+        
+        var laboratoryRegister = (SystemMO)_model.Elements.First(el => el.Name == "LABORATORY_REGISTER");
+        double averageTimeBetweenPatientsArrivalInLaboratory = currentTime /
+                                                               (laboratoryRegister.ServedElementsQuantity +
+                                                                laboratoryRegister.Queue.Items.Count);
+        
+        Console.WriteLine($"Average time between the arrival of patients in the laboratory: {averageTimeBetweenPatientsArrivalInLaboratory}");
+        Console.WriteLine("------------------------");
     }
 }
