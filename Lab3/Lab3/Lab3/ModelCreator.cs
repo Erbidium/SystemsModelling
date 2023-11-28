@@ -8,7 +8,7 @@ namespace Lab3;
 
 public static class ModelCreator
 {
-    public static NetMO GetTwoProcessModelWithPriorities()
+    public static NetMO CreateShopModel()
     {
         var createDelay = new ExponentialDelay(0.5);
         var processDelay = new ExponentialDelay(0.3);
@@ -31,5 +31,10 @@ public static class ModelCreator
         smo2.Queue = new BankQueue(new []{ new SimpleItem(), new SimpleItem()}, 3) { Elements = elements };
 
         return new NetMO(elements);
+    }
+
+    public static NetMO CreateHospitalModel()
+    {
+        
     }
 }
