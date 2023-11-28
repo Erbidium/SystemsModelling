@@ -10,8 +10,8 @@ public class PatientFactory : IItemFactory
     private List<(PatientType PatientType, double Chance)> _patientChances = new()
     {
         (PatientType.ReadyForTreatment, 0.5),
-        (PatientType.UndergoPreliminaryExamination, 0.1),
-        (PatientType.JustGotToHospital, 0.4)
+        (PatientType.WantToHospitalButHaveToPassPreliminaryExamination, 0.1),
+        (PatientType.OnlyUndergoPreliminaryExamination, 0.4)
     };
     
     public SimpleItem CreateItem()

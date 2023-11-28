@@ -17,8 +17,8 @@ public class PatientRegistrationDelay : IDelay
         var patientDelay = patient.Type switch
         {
             PatientType.ReadyForTreatment => _firstPatientTypeDelay,
-            PatientType.UndergoPreliminaryExamination => _secondPatientTypeDelay,
-            PatientType.JustGotToHospital => _thirdPatientTypeDelay,
+            PatientType.WantToHospitalButHaveToPassPreliminaryExamination => _secondPatientTypeDelay,
+            PatientType.OnlyUndergoPreliminaryExamination => _thirdPatientTypeDelay,
             _ => throw new ArgumentOutOfRangeException()
         };
 

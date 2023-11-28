@@ -3,6 +3,6 @@
 public enum PatientType
 {
     ReadyForTreatment,
-    JustGotToHospital,
-    UndergoPreliminaryExamination
+    WantToHospitalButHaveToPassPreliminaryExamination,
+    OnlyUndergoPreliminaryExamination
 }

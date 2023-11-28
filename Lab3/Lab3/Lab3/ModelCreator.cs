@@ -37,7 +37,6 @@ public static class ModelCreator
 
     public static NetMO CreateHospitalModel()
     {
-        // Час між прибуттями в приймальне відділення
         var arrivalHospitalReceptionDepartment = new Create(new ExponentialDelay(15), new PatientFactory()) { Name = "PATIENTS_CREATOR" };
         var doctorsOnDuty = new SystemMO(new PatientRegistrationDelay(), 2)
         {
@@ -45,23 +44,32 @@ public static class ModelCreator
             Queue = new DoctorPriorityQueue(PatientType.ReadyForTreatment)
         };
         var hospitalWards = new SystemMO(new UniformDelay(3, 8), 3) { Name = "HOSPITAL_WARDS" };
-        var transferFromReceptionDepartmentToLaboratory = new SystemMO(new UniformDelay(2, 5), 1) { Name = "TRANSFER_FROM_RECEPTION_DEPARTMENT_TO_LABORATORY" };
+        var transferFromReceptionDepartmentToLaboratory = new SystemMO(new UniformDelay(2, 5), 200)
+        {
+            Name = "TRANSFER_FROM_RECEPTION_DEPARTMENT_TO_LABORATORY",
+            Queue = new Queue(0)
+        };
         var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1){ Name = "LABORATORY_REGISTER" };
         var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2){ Name = "ANALYSIS_IN_LABORATORY" };
-
-        var transferFromLaboratoryToReceptionDepartment = new UniformDelay(2, 5);
+        var transferFromLaboratoryToReceptionDepartment = new SystemMO(new UniformDelay(2, 5), 200)
+        {
+            Name = "TRANSFER_FROM_LABORATORY_TO_RECEPTION_DEPARTMENT",
+            Queue = new Queue(0)
+        };
 
         arrivalHospitalReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
             new List<(Element Element, PatientType PatientType)>
             {
                 (hospitalWards, PatientType.ReadyForTreatment),
-                (transferFromReceptionDepartmentToLaboratory, PatientType.UndergoPreliminaryExamination),
-                (transferFromReceptionDepartmentToLaboratory, PatientType.JustGotToHospital)
+                (transferFromReceptionDepartmentToLaboratory, PatientType.WantToHospitalButHaveToPassPreliminaryExamination),
+                (transferFromReceptionDepartmentToLaboratory, PatientType.OnlyUndergoPreliminaryExamination)
             });
 
         transferFromReceptionDepartmentToLaboratory.NextElement = new OneNextElementPicker(laboratoryRegister);
         laboratoryRegister.NextElement = new OneNextElementPicker(analysisInLaboratory);
+        analysisInLaboratory.NextElement = new NextElementAfterAnalysisPicker(transferFromLaboratoryToReceptionDepartment);
+        transferFromLaboratoryToReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
 
         var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory };
 
