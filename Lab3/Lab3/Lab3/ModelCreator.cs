@@ -1,5 +1,6 @@
 ﻿using Lab3.Delays;
 using Lab3.Elements;
+using Lab3.Enums;
 using Lab3.ItemFactories;
 using Lab3.Items;
 using Lab3.NextElement;
@@ -46,10 +47,20 @@ public static class ModelCreator
         var doctorsOnDuty = new SystemMO(processDelay, 2)
         {
             Name = "DOCTORS_ON_DUTY",
-            Queue = new DoctorPriorityQueue()
+            Queue = new DoctorPriorityQueue(PatientType.ReadyForTreatment)
         };
 
+        var hospitalWard = new SystemMO(processDelay, 1);
+        var laboratory = new SystemMO(processDelay, 1);
+
         patientsCreator.NextElement = new OneNextElementPicker(doctorsOnDuty);
+        doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
+            new List<(Element Element, PatientType PatientType)>
+            {
+                (hospitalWard, PatientType.ReadyForTreatment),
+                (laboratory, PatientType.UndergoPreliminaryExamination),
+                (laboratory, PatientType.JustGotToHospital)
+            });
 
         var elements = new List<Element> { patientsCreator, doctorsOnDuty };
 
