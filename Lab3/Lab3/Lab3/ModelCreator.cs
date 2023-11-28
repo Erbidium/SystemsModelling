@@ -42,21 +42,16 @@ public static class ModelCreator
         var processDelay = new ExponentialDelay(0.3);
 
         var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new PatientFactory()) { Name = "PATIENTS_CREATOR" };
-
-        var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
-        var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
-
-        smo1.Devices[0].IsServing = true;
-        smo1.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
         
-        smo2.Devices[0].IsServing = true;
-        smo2.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate();
+        var doctorsOnDuty = new SystemMO(processDelay, 2)
+        {
+            Name = "DOCTORS_ON_DUTY",
+            Queue = new DoctorPriorityQueue()
+        };
 
-        patientsCreator.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
+        patientsCreator.NextElement = new OneNextElementPicker(doctorsOnDuty);
 
-        var elements = new List<Element> { patientsCreator, smo1, smo2 };
-        smo1.Queue = new BankQueue(new []{ new SimpleItem(), new SimpleItem()}, 3) { Elements = elements };
-        smo2.Queue = new BankQueue(new []{ new SimpleItem(), new SimpleItem()}, 3) { Elements = elements };
+        var elements = new List<Element> { patientsCreator, doctorsOnDuty };
 
         return new NetMO(elements);
     }
