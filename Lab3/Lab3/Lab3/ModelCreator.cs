@@ -71,7 +71,7 @@ public static class ModelCreator
         analysisInLaboratory.NextElement = new NextElementAfterAnalysisPicker(transferFromLaboratoryToReceptionDepartment);
         transferFromLaboratoryToReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
 
-        var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory };
+        var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory, transferFromLaboratoryToReceptionDepartment };
 
         return new NetMO(elements);
     }

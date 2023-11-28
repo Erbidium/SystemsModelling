@@ -1,5 +1,6 @@
 ﻿using Lab3.Elements;
 using Lab3.ModelStats;
+using Lab3.NextElement;
 
 namespace Lab3;
 

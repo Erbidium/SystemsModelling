@@ -6,7 +6,9 @@ namespace Lab3.NextElement;
 
 public class NextElementAfterAnalysisPicker : INextElementPicker
 {
-    private Element _transferFromLaboratoryToReceptionDepartment;
+    public static int PatientTypeChangesCount = 0;
+    
+    private readonly Element _transferFromLaboratoryToReceptionDepartment;
     
     public NextElementAfterAnalysisPicker(Element transferFromLaboratoryToReceptionDepartment)
     {
@@ -18,6 +20,7 @@ public class NextElementAfterAnalysisPicker : INextElementPicker
     {
         if (item is Patient { Type: PatientType.WantToHospitalButHaveToPassPreliminaryExamination } patient)
         {
+            PatientTypeChangesCount++;
             patient.Type = PatientType.ReadyForTreatment;
             return _transferFromLaboratoryToReceptionDepartment;
         }

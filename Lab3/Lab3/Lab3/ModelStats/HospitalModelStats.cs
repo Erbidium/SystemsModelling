@@ -1,4 +1,5 @@
 ﻿using Lab3.Elements;
+using Lab3.NextElement;
 
 namespace Lab3.ModelStats;
 
@@ -27,6 +28,7 @@ public class HospitalModelStats : IModelStatsPrinter
                                                                 laboratoryRegister.Queue.Items.Count);
         
         Console.WriteLine($"Average time between the arrival of patients in the laboratory: {averageTimeBetweenPatientsArrivalInLaboratory}");
+        Console.WriteLine($"Patient type changes count: {NextElementAfterAnalysisPicker.PatientTypeChangesCount}");
         Console.WriteLine("------------------------");
     }
 }
