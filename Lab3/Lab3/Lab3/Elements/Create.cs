@@ -1,4 +1,5 @@
 ﻿using Lab3.Delays;
+using Lab3.Items;
 
 namespace Lab3.Elements;
 
@@ -9,7 +10,7 @@ public sealed class Create : Element {
     public override void Exit() {
         base.Exit();
         TimeNext = TimeCurrent + GetDelay();
-        NextElement?.NextElement?.Enter();
+        NextElement?.NextElement(new SimpleItem())?.Enter();
     }
 
     public override void DoStatistics(double delta) { }

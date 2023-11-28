@@ -76,7 +76,7 @@ public class SystemMO : Element
             }
         }
         
-        NextElement?.NextElement?.Enter();
+        NextElement?.NextElement(new SimpleItem())?.Enter();
     }
 
     public override void PrintResult()

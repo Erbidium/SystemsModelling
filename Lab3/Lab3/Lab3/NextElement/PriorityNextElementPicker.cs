@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using Lab3.Elements;
+﻿using Lab3.Elements;
+using Lab3.Items;
 
 namespace Lab3.NextElement;
 
@@ -14,38 +14,35 @@ public class PriorityNextElementPicker : INextElementPicker
         _nextElementPriorities = nextElementPriorities;
     }
 
-    public Element? NextElement
+    public Element? NextElement(SimpleItem item)
     {
-        get
-        {
-            var freeElements = _nextElementPriorities.Where(tuple => !tuple.Element.IsFull).ToList();
+        var freeElements = _nextElementPriorities.Where(tuple => !tuple.Element.IsFull).ToList();
 
-            if (freeElements.Count > 0)
-                return FindElementWithMaxPriority(freeElements);
+        if (freeElements.Count > 0)
+            return FindElementWithMaxPriority(freeElements);
             
-            var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element.Queue.Items.Count < tuple.Element.Queue.MaxCount).ToList();
+        var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element.Queue.Items.Count < tuple.Element.Queue.MaxCount).ToList();
 
-            if (freeQueues.Count > 0)
-            {
-                var minQueueLength = freeQueues
-                    .Select(t => t.Element.Queue.Items.Count)
-                    .Min();
+        if (freeQueues.Count > 0)
+        {
+            var minQueueLength = freeQueues
+                .Select(t => t.Element.Queue.Items.Count)
+                .Min();
 
-                var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue.Items.Count == minQueueLength).ToList();
-                return FindElementWithMaxPriority(elementsWithMinQueue);
-            }
+            var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue.Items.Count == minQueueLength).ToList();
+            return FindElementWithMaxPriority(elementsWithMinQueue);
+        }
 
-            return _nextElementPriorities.OrderByDescending(tuple => tuple.Priority).Select(t => t.Element).FirstOrDefault();
+        return _nextElementPriorities.OrderByDescending(tuple => tuple.Priority).Select(t => t.Element).FirstOrDefault();
 
-            Element? FindElementWithMaxPriority(IReadOnlyCollection<(Element Element, int Priority)> elements)
-            {
-                if (elements.Count == 0)
-                    return null;
+        Element? FindElementWithMaxPriority(IReadOnlyCollection<(Element Element, int Priority)> elements)
+        {
+            if (elements.Count == 0)
+                return null;
                 
-                var maxFreePriority = elements.Select(tuple => tuple.Priority).Max();
-                var freeElementsWithMaxPriority = elements.Where(tuple => tuple.Priority == maxFreePriority).ToList();
-                return freeElementsWithMaxPriority[_rand.Next(freeElementsWithMaxPriority.Count)].Element;
-            }
+            var maxFreePriority = elements.Select(tuple => tuple.Priority).Max();
+            var freeElementsWithMaxPriority = elements.Where(tuple => tuple.Priority == maxFreePriority).ToList();
+            return freeElementsWithMaxPriority[_rand.Next(freeElementsWithMaxPriority.Count)].Element;
         }
     }
 }

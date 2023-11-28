@@ -1,4 +1,5 @@
 ﻿using Lab3.Elements;
+using Lab3.Items;
 
 namespace Lab3.NextElement;
 
@@ -8,25 +9,22 @@ public class WeightedNextElementPicker : INextElementPicker
     
     private readonly Random _rand = new();
 
-    public Element? NextElement
+    public Element? NextElement(SimpleItem item)
     {
-        get
-        {
-            double totalChancesSum = NextElementChances.Sum(el => el.Chance);
-            double chanceGeneratedValue = _rand.NextDouble() * totalChancesSum;
+        double totalChancesSum = NextElementChances.Sum(el => el.Chance);
+        double chanceGeneratedValue = _rand.NextDouble() * totalChancesSum;
             
-            double chancesAccumulatedSum = 0;
-            for (int i = 0; i < NextElementChances.Count; i++)
+        double chancesAccumulatedSum = 0;
+        for (int i = 0; i < NextElementChances.Count; i++)
+        {
+            chancesAccumulatedSum += NextElementChances[i].Chance;
+            if (chancesAccumulatedSum > chanceGeneratedValue)
             {
-                chancesAccumulatedSum += NextElementChances[i].Chance;
-                if (chancesAccumulatedSum > chanceGeneratedValue)
-                {
-                    var element = NextElementChances[i].Element;
-                    Console.WriteLine($"To element {element.Name}");
-                    return element;
-                }
+                var element = NextElementChances[i].Element;
+                Console.WriteLine($"To element {element.Name}");
+                return element;
             }
-            return null;
         }
+        return null;
     }
 }
