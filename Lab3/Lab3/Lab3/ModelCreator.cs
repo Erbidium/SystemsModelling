@@ -46,10 +46,10 @@ public static class ModelCreator
             Name = "DOCTORS_ON_DUTY",
             Queue = new DoctorPriorityQueue(PatientType.ReadyForTreatment)
         };
-        var hospitalWards = new SystemMO(new UniformDelay(3, 8), 3);
-        var transferFromReceptionDepartmentToLaboratory = new SystemMO(new UniformDelay(2, 5), 1);
-        var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1);
-        var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2);
+        var hospitalWards = new SystemMO(new UniformDelay(3, 8), 3) { Name = "HOSPITAL_WARDS" };
+        var transferFromReceptionDepartmentToLaboratory = new SystemMO(new UniformDelay(2, 5), 1) { Name = "TRANSFER_FROM_RECEPTION_DEPARTMENT_TO_LABORATORY" };
+        var laboratoryRegister = new SystemMO(new ErlangDelay(4.5, 3), 1){ Name = "LABORATORY_REGISTER" };
+        var analysisInLaboratory = new SystemMO(new ErlangDelay(4, 2), 2){ Name = "ANALYSIS_IN_LABORATORY" };
 
         patientsCreator.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
