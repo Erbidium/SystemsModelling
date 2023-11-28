@@ -21,6 +21,17 @@ public class HospitalModelStats : IModelStatsPrinter
     {
         Console.WriteLine("------------------------");
         Console.WriteLine("Hospital model statistics");
+
+        var endPatientsServing = (EndPatientsServing)_model.Elements.First(el => el.Name == "END_PATIENTS_SERVING");
+        var averageSpentTimeByPatientType = endPatientsServing.ServedPatients
+            .GroupBy(p => p.InitialType)
+            .Select(group => (PatientType: group.Key, AverageSpentTime: group.Average(p => p.FinishServingTime - p.CreationTime)));
+
+        Console.WriteLine("Average time spent by patient type in system");
+        foreach (var patientTypeTime in averageSpentTimeByPatientType)
+        {
+            Console.WriteLine($"{patientTypeTime.PatientType}: {patientTypeTime.AverageSpentTime}");
+        }
         
         var laboratoryRegister = (SystemMO)_model.Elements.First(el => el.Name == "LABORATORY_REGISTER");
         double averageTimeBetweenPatientsArrivalInLaboratory = currentTime /

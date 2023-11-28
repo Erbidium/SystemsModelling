@@ -14,10 +14,10 @@ public class PatientFactory : IItemFactory
         (PatientType.OnlyUndergoPreliminaryExamination, 0.4)
     };
     
-    public SimpleItem CreateItem()
+    public SimpleItem CreateItem(double currentTime)
     {
         var patientType = RandomHelper.GetWeightedRandomValue(_patientChances, _rand);
 
-        return new Patient { Type = patientType };
+        return new Patient(currentTime, patientType);
     }
 }

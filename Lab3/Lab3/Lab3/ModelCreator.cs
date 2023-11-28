@@ -56,6 +56,8 @@ public static class ModelCreator
             Name = "TRANSFER_FROM_LABORATORY_TO_RECEPTION_DEPARTMENT",
             Queue = new Queue(0)
         };
+        
+        var endPatientsServing = new EndPatientsServing(new ConstantDelay(0)){ Name = "END_PATIENTS_SERVING" };
 
         arrivalHospitalReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
         doctorsOnDuty.NextElement = new NextElementByPatientTypePicker(
@@ -66,12 +68,13 @@ public static class ModelCreator
                 (transferFromReceptionDepartmentToLaboratory, PatientType.OnlyUndergoPreliminaryExamination)
             });
 
+        hospitalWards.NextElement = new OneNextElementPicker(endPatientsServing);
         transferFromReceptionDepartmentToLaboratory.NextElement = new OneNextElementPicker(laboratoryRegister);
         laboratoryRegister.NextElement = new OneNextElementPicker(analysisInLaboratory);
-        analysisInLaboratory.NextElement = new NextElementAfterAnalysisPicker(transferFromLaboratoryToReceptionDepartment);
+        analysisInLaboratory.NextElement = new NextElementAfterAnalysisPicker(transferFromLaboratoryToReceptionDepartment, endPatientsServing);
         transferFromLaboratoryToReceptionDepartment.NextElement = new OneNextElementPicker(doctorsOnDuty);
 
-        var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory, transferFromLaboratoryToReceptionDepartment };
+        var elements = new List<Element> { arrivalHospitalReceptionDepartment, doctorsOnDuty, hospitalWards, transferFromReceptionDepartmentToLaboratory, laboratoryRegister, analysisInLaboratory, transferFromLaboratoryToReceptionDepartment, endPatientsServing };
 
         return new NetMO(elements);
     }

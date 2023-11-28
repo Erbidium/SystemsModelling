@@ -4,5 +4,5 @@ namespace Lab3.ItemFactories;
 
 public interface IItemFactory
 {
-    public SimpleItem CreateItem();
+    public SimpleItem CreateItem(double currentTime);
 }
