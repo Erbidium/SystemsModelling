@@ -1,5 +1,6 @@
 ﻿using Lab3.Delays;
 using Lab3.Elements;
+using Lab3.ItemFactories;
 using Lab3.Items;
 using Lab3.NextElement;
 using Lab3.Queues;
@@ -13,7 +14,7 @@ public static class ModelCreator
         var createDelay = new ExponentialDelay(0.5);
         var processDelay = new ExponentialDelay(0.3);
 
-        var create = new Create(createDelay) { Name = "CARS_CREATOR", TimeNext = 0.1 };
+        var create = new Create(createDelay, new SimpleItemFactory()) { Name = "CARS_CREATOR", TimeNext = 0.1 };
 
         var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
@@ -40,7 +41,7 @@ public static class ModelCreator
         
         var processDelay = new ExponentialDelay(0.3);
 
-        var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay) { Name = "PATIENTS_CREATOR" };
+        var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new SimpleItemFactory()) { Name = "PATIENTS_CREATOR" };
 
         var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
