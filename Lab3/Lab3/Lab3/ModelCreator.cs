@@ -41,7 +41,7 @@ public static class ModelCreator
         
         var processDelay = new ExponentialDelay(0.3);
 
-        var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new SimpleItemFactory()) { Name = "PATIENTS_CREATOR" };
+        var patientsCreator = new Create(arrivalHospitalReceptionDepartmentDelay, new PatientFactory()) { Name = "PATIENTS_CREATOR" };
 
         var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };

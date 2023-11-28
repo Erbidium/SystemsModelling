@@ -9,22 +9,12 @@ public class WeightedNextElementPicker : INextElementPicker
     
     private readonly Random _rand = new();
 
-    public Element? NextElement(SimpleItem item)
+    public Element NextElement(SimpleItem item)
     {
-        double totalChancesSum = NextElementChances.Sum(el => el.Chance);
-        double chanceGeneratedValue = _rand.NextDouble() * totalChancesSum;
-            
-        double chancesAccumulatedSum = 0;
-        for (int i = 0; i < NextElementChances.Count; i++)
-        {
-            chancesAccumulatedSum += NextElementChances[i].Chance;
-            if (chancesAccumulatedSum > chanceGeneratedValue)
-            {
-                var element = NextElementChances[i].Element;
-                Console.WriteLine($"To element {element.Name}");
-                return element;
-            }
-        }
-        return null;
+        var element = RandomHelper.GetWeightedRandomValue(NextElementChances, _rand);
+
+        Console.WriteLine($"To element {element.Name}");
+
+        return element;
     }
 }
