@@ -1,4 +1,5 @@
 ﻿using Lab3.Delays;
+using Lab3.Items;
 
 namespace Lab3.Elements;
 
@@ -48,9 +49,9 @@ public class SystemMO : Element
             var freeDevice = Devices.First(d => !d.IsServing);
             freeDevice.Enter();
         }
-        else if (Queue.Count < Queue.MaxCount)
+        else if (Queue.Items.Count < Queue.MaxCount)
         {
-            Queue.Add();
+            Queue.Add(new SimpleItem());
         }
         else
         {
@@ -68,7 +69,7 @@ public class SystemMO : Element
         {
             device.Exit();
             
-            if (Queue.Count > 0)
+            if (Queue.Items.Count > 0)
             {
                 Queue.Remove();
                 device.Enter();
@@ -92,7 +93,7 @@ public class SystemMO : Element
 
     public override void DoStatistics(double delta)
     {
-        MeanQueueStat += Queue.Count * delta;
+        MeanQueueStat += Queue.Items.Count * delta;
         
         if (!IsServing)
             return;

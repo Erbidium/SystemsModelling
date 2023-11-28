@@ -1,4 +1,5 @@
 ﻿using Lab3.Elements;
+using Lab3.Items;
 
 namespace Lab3.Queues;
 
@@ -10,37 +11,40 @@ public class BankQueue : Queue
 
     public BankQueue(int maxCount) : base(maxCount) { }
     
-    public BankQueue(int count, int maxCount) : base(count, maxCount) { }
+    public BankQueue(IEnumerable<SimpleItem> items, int maxCount) : base(items, maxCount) { }
     
-    public override void Add()
+    public override void Add(SimpleItem item)
     {
-        base.Add();
+        base.Add(item);
         OnQueueChanged();
     }
 
-    public override void Remove()
+    public override SimpleItem Remove()
     {
-        base.Remove();
+        var removedItem = base.Remove();
+        
         OnQueueChanged();
+
+        return removedItem;
     }
 
     private void OnQueueChanged()
     {
         foreach (var elementWithQueueToFill in Elements)
         {
-            if (elementWithQueueToFill.Queue.Count < elementWithQueueToFill.Queue.MaxCount)
+            if (elementWithQueueToFill is SystemMO && elementWithQueueToFill.Queue.Items.Count < elementWithQueueToFill.Queue.MaxCount)
             {
                 foreach (var elementWithExcessiveQueue in Elements)
                 {
-                    if (elementWithExcessiveQueue.Queue.Count > 0 && elementWithExcessiveQueue.Queue.Count - elementWithQueueToFill.Queue.Count >= 2)
+                    if (elementWithQueueToFill is SystemMO && elementWithExcessiveQueue.Queue.Items.Count > 0 && elementWithExcessiveQueue.Queue.Items.Count - elementWithQueueToFill.Queue.Items.Count >= 2)
                     {
-                        elementWithExcessiveQueue.Queue.Remove();
-                        elementWithQueueToFill.Queue.Add();
+                        var car = elementWithExcessiveQueue.Queue.Remove();
+                        elementWithQueueToFill.Queue.Add(car);
 
                         SystemMO.QueueChangesCount++;
                     }
                     
-                    if (elementWithQueueToFill.Queue.Count == elementWithQueueToFill.Queue.MaxCount)
+                    if (elementWithQueueToFill.Queue.Items.Count == elementWithQueueToFill.Queue.MaxCount)
                         break;
                 }
             }

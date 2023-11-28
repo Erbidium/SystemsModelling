@@ -16,7 +16,7 @@ public class BankModelStats : IModelStatsPrinter
     public void DoStatistics(double delta)
     {
         var cashiers = _model.Elements.OfType<SystemMO>().ToList();
-        int totalClientsCount = cashiers.Sum(c => c.Queue.Count + c.Devices.Count(d => d.IsServing));
+        int totalClientsCount = cashiers.Sum(c => c.Queue.Items.Count + c.Devices.Count(d => d.IsServing));
 
         _averageClientsCountStat += totalClientsCount * delta;
     }

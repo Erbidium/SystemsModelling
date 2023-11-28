@@ -1,5 +1,6 @@
 ﻿using Lab3.Delays;
 using Lab3.Elements;
+using Lab3.Items;
 using Lab3.NextElement;
 using Lab3.Queues;
 
@@ -26,8 +27,8 @@ public static class ModelCreator
         create.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
 
         var elements = new List<Element> { create, smo1, smo2 };
-        smo1.Queue = new BankQueue(2, 3) { Elements = elements };
-        smo2.Queue = new BankQueue(2, 3) { Elements = elements };
+        smo1.Queue = new BankQueue(new []{ new SimpleItem(), new SimpleItem()}, 3) { Elements = elements };
+        smo2.Queue = new BankQueue(new []{ new SimpleItem(), new SimpleItem()}, 3) { Elements = elements };
 
         return new NetMO(elements);
     }

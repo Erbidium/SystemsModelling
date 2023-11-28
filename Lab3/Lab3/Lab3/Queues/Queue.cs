@@ -1,8 +1,10 @@
-﻿namespace Lab3.Queues;
+﻿using Lab3.Items;
+
+namespace Lab3.Queues;
 
 public class Queue
 {
-    public int Count { get; private set; }
+    public List<SimpleItem> Items { get; } = new();
 
     public int MaxCount { get; } = int.MaxValue;
     
@@ -13,20 +15,21 @@ public class Queue
         MaxCount = maxCount;
     }
     
-    public Queue(int count, int maxCount)
+    public Queue(IEnumerable<SimpleItem> items, int maxCount)
     {
-        Count = count;
+        Items.AddRange(items);
         MaxCount = maxCount;
     }
 
-    public virtual void Add()
+    public virtual void Add(SimpleItem item)
     {
-        Count++;
-        
+        Items.Add(item);
     }
 
-    public virtual void Remove()
+    public virtual SimpleItem Remove()
     {
-        Count--;
+        var lastItem = Items[^1];
+        Items.RemoveAt(Items.Count - 1);
+        return lastItem;
     }
 }

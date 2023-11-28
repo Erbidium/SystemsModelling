@@ -23,15 +23,15 @@ public class PriorityNextElementPicker : INextElementPicker
             if (freeElements.Count > 0)
                 return FindElementWithMaxPriority(freeElements);
             
-            var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element.Queue.Count < tuple.Element.Queue.MaxCount).ToList();
+            var freeQueues = _nextElementPriorities.Where(tuple => tuple.Element.Queue.Items.Count < tuple.Element.Queue.MaxCount).ToList();
 
             if (freeQueues.Count > 0)
             {
                 var minQueueLength = freeQueues
-                    .Select(t => t.Element.Queue.Count)
+                    .Select(t => t.Element.Queue.Items.Count)
                     .Min();
 
-                var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue.Count == minQueueLength).ToList();
+                var elementsWithMinQueue = freeQueues.Where(t => t.Element.Queue.Items.Count == minQueueLength).ToList();
                 return FindElementWithMaxPriority(elementsWithMinQueue);
             }
 
