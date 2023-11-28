@@ -10,7 +10,10 @@ public sealed class Create : Element {
     public override void Exit() {
         base.Exit();
         TimeNext = TimeCurrent + GetDelay();
-        NextElement?.NextElement(new SimpleItem())?.Enter(new SimpleItem());
+
+        var createdItem = new SimpleItem();
+        
+        NextElement?.NextElement(createdItem)?.Enter(createdItem);
     }
 
     public override void DoStatistics(double delta) { }

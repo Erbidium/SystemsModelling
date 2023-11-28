@@ -67,6 +67,7 @@ public class SystemMO : Element
 
         foreach (var device in finishedDevices)
         {
+            SimpleItem processedItem = device.ProcessedItem!;
             device.Exit();
             
             if (Queue.Items.Count > 0)
@@ -74,9 +75,9 @@ public class SystemMO : Element
                 var itemFromQueue = Queue.Remove();
                 device.Enter(itemFromQueue);
             }
+            
+            NextElement?.NextElement(processedItem)?.Enter(processedItem);
         }
-        
-        NextElement?.NextElement(new SimpleItem())?.Enter(new SimpleItem());
     }
 
     public override void PrintResult()

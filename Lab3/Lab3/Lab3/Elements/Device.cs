@@ -5,6 +5,8 @@ namespace Lab3.Elements;
 
 public sealed class Device : Element
 {
+    public SimpleItem? ProcessedItem { get; private set; }
+    
     public Device(IDelay delay) : base(delay)
     {
         TimeNext = double.MaxValue;
@@ -14,12 +16,14 @@ public sealed class Device : Element
     {
         IsServing = true;
         TimeNext = TimeCurrent + GetDelay();
+        ProcessedItem = item;
     }
 
     public override void Exit()
     {
         IsServing = false;
         TimeNext = double.MaxValue;
+        ProcessedItem = null;
         base.Exit();
     }
 
