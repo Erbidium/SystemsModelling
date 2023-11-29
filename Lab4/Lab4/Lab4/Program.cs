@@ -1,8 +1,20 @@
-﻿using Lab3;
-using Lab3.ModelStats;
+﻿using System.Diagnostics;
+using Lab3;
 
-const int simulationTime = 10000;
+const int simulationTime = 1000;
 
-//var model = ModelCreator.CreateChainedModel(100);
-var model = ModelCreator.CreateBranchedModel(23, 4);
-model.Simulate(simulationTime);
+for (int processesCount = 100; processesCount <= 1000; processesCount += 100)
+{
+    Stopwatch stopwatch = new Stopwatch();
+    
+    //var model = ModelCreator.CreateChainedModel(processesCount);
+    var model = ModelCreator.CreateBranchedModel(processesCount, 4);
+
+    var startTime = Stopwatch.GetTimestamp();
+    
+    model.Simulate(simulationTime);
+    
+    var executionTimeInMilliseconds = Stopwatch.GetElapsedTime(startTime).TotalMilliseconds;
+    
+    Console.WriteLine($"Total events count: {processesCount + 1}, execution time: {executionTimeInMilliseconds} milliseconds");
+}

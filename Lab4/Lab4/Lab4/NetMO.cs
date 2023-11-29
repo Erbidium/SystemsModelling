@@ -40,8 +40,8 @@ public class NetMO {
             
             //PrintInfo();
         }
-        PrintResult();
-        statsPrinter?.PrintModelStats(_timeCurrent);
+        //PrintResult();
+        //statsPrinter?.PrintModelStats(_timeCurrent);
     }
 
     private void PrintInfo()
