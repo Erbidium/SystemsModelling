@@ -10,7 +10,7 @@ namespace Lab3;
 
 public static class ModelCreator
 {
-    public static NetMO CreateShopModel()
+    public static NetMO CreateBankModel()
     {
         var createDelay = new ExponentialDelay(0.5);
         var processDelay = new ExponentialDelay(0.3);

@@ -2,7 +2,7 @@
 using Lab3.ModelStats;
 
 //const int bankSimulationTime = 1000;
-//var model = ModelCreator.CreateHospitalModel();
+//var model = ModelCreator.CreateBankModel();
 //var statsPrinter = new BankModelStats(model);
 
 const int hospitalSimulationTime = 10000;
