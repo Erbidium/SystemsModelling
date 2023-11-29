@@ -1,10 +1,7 @@
 ﻿using Lab3;
 using Lab3.ModelStats;
 
-//const int bankSimulationTime = 1000;
-//var model = ModelCreator.CreateHospitalModel();
-//var statsPrinter = new BankModelStats(model);
+const int simulationTime = 10000;
 
-const int hospitalSimulationTime = 10000;
-
-//model.Simulate(hospitalSimulationTime);
+var model = ModelCreator.CreateChainedModel(500);
+model.Simulate(simulationTime);

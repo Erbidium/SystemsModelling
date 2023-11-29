@@ -42,7 +42,9 @@ public abstract class Element {
         => Console.WriteLine($"{Name} served quantity = {ServedElementsQuantity}");
 
     public virtual void PrintInfo()
-        => Console.WriteLine($"{Name} is {(IsServing ? "serving" : "waiting")}. Served quantity = {ServedElementsQuantity} TimeNext = {TimeNext}");
+    {
+        // Console.WriteLine($"{Name} is {(IsServing ? "serving" : "waiting")}. Served quantity = {ServedElementsQuantity} TimeNext = {TimeNext}");
+    }
 
     public abstract void DoStatistics(double delta);
 }

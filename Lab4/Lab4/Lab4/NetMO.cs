@@ -14,34 +14,34 @@ public class NetMO {
     public NetMO(List<Element> elements)
         => Elements = elements;
 
-    public void Simulate(double time, IModelStatsPrinter statsPrinter)
+    public void Simulate(double time, IModelStatsPrinter? statsPrinter = null)
     {
         while (_timeCurrent < time)
         {
             _timeNext = Elements.Select(e => e.TimeNext).Min();
             
             Elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
-            statsPrinter.DoStatistics(_timeNext - _timeCurrent);
+            statsPrinter?.DoStatistics(_timeNext - _timeCurrent);
             
             _timeCurrent = _timeNext;
 
             Elements.ForEach(e => e.TimeCurrent = _timeCurrent);
 
-            Console.WriteLine($"-----Current time: {_timeCurrent}----");
+            //Console.WriteLine($"-----Current time: {_timeCurrent}----");
             
             foreach (var element in Elements)
             {
                 if (element.TimeNext == _timeCurrent)
                 {
-                    Console.WriteLine($"Next event will be in element {element.Name}");
+                    //Console.WriteLine($"Next event will be in element {element.Name}");
                     element.Exit();
                 }
             }
             
-            PrintInfo();
+            //PrintInfo();
         }
         PrintResult();
-        statsPrinter.PrintModelStats(_timeCurrent);
+        statsPrinter?.PrintModelStats(_timeCurrent);
     }
 
     private void PrintInfo()

@@ -13,7 +13,7 @@ public class WeightedNextElementPicker : INextElementPicker
     {
         var element = RandomHelper.GetWeightedRandomValue(NextElementChances, _rand);
 
-        Console.WriteLine($"To element {element.Name}");
+        //Console.WriteLine($"To element {element.Name}");
 
         return element;
     }
