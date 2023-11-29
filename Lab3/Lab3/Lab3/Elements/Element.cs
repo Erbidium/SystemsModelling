@@ -9,7 +9,7 @@ public abstract class Element {
     private int Id { get; }
     public string Name { get; set; }
     public virtual double TimeCurrent { get; set; }
-    public virtual double TimeNext { get; set; }
+    public virtual double TimeNext { get; set; } = double.MaxValue;
 
     public int ServedElementsQuantity { get; protected set; }
     
