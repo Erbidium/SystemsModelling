@@ -20,11 +20,15 @@ public static class ModelCreator
         var smo1 = new SystemMO(processDelay, 1) { Name = "CASHIER1" };
         var smo2 = new SystemMO(processDelay, 1) { Name = "CASHIER2" };
 
+        var processedItemSmo1 = new SimpleItem();
         smo1.Devices[0].IsServing = true;
         smo1.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate(null!);
+        smo1.Devices[0].ProcessedItem = processedItemSmo1;
         
+        var processedItemSmo2 = new SimpleItem();
         smo2.Devices[0].IsServing = true;
         smo2.Devices[0].TimeNext = new NormalDelay(1, 0.3).Generate(null!);
+        smo2.Devices[0].ProcessedItem = processedItemSmo2;
 
         create.NextElement = new PriorityNextElementPicker(new List<(Element Element, int Priority)> { (smo1, 2), (smo2, 1) });
 

@@ -14,14 +14,14 @@ public class NetMO {
     public NetMO(List<Element> elements)
         => Elements = elements;
 
-    public void Simulate(double time, IModelStatsPrinter statsPrinter)
+    public void Simulate(double time, IModelStatsPrinter? statsPrinter = null)
     {
         while (_timeCurrent < time)
         {
             _timeNext = Elements.Select(e => e.TimeNext).Min();
             
             Elements.ForEach(e => e.DoStatistics(_timeNext - _timeCurrent));
-            statsPrinter.DoStatistics(_timeNext - _timeCurrent);
+            statsPrinter?.DoStatistics(_timeNext - _timeCurrent);
             
             _timeCurrent = _timeNext;
 
@@ -41,7 +41,7 @@ public class NetMO {
             PrintInfo();
         }
         PrintResult();
-        statsPrinter.PrintModelStats(_timeCurrent);
+        statsPrinter?.PrintModelStats(_timeCurrent);
     }
 
     private void PrintInfo()
