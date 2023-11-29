@@ -5,7 +5,7 @@ namespace Lab3.Elements;
 
 public sealed class Device : Element
 {
-    public SimpleItem? ProcessedItem { get; private set; }
+    public SimpleItem? ProcessedItem { get; set; }
     
     public Device(IDelay delay) : base(delay)
     {
