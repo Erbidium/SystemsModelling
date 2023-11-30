@@ -100,7 +100,7 @@ public static class ModelCreator
             createdProcessesCount++;
         }
         
-        Console.WriteLine($"Created count: {createdProcessesCount}");
+        // Console.WriteLine($"Created count: {createdProcessesCount}");
 
         return new NetMO(elements);
     }

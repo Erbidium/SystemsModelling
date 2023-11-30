@@ -1,12 +1,10 @@
 ﻿using System.Diagnostics;
 using Lab3;
 
-const int simulationTime = 1000;
+const int simulationTime = 600;
 
 for (int processesCount = 100; processesCount <= 1000; processesCount += 100)
 {
-    Stopwatch stopwatch = new Stopwatch();
-    
     //var model = ModelCreator.CreateChainedModel(processesCount);
     var model = ModelCreator.CreateBranchedModel(processesCount, 4);
 
