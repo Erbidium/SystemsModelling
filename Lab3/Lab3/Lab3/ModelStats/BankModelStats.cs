@@ -29,7 +29,7 @@ public class BankModelStats : IModelStatsPrinter
 
         var cashiers = _model.Elements.OfType<SystemMO>().ToList();
         
-        double averageTimeBetweenCarDepartures = cashiers.Select(el => currentTime / el.ServedElementsQuantity).Sum();
+        double averageTimeBetweenCarDepartures = cashiers.Select(el => currentTime / el.ServedElementsQuantity).Sum() / cashiers.Count;
         Console.WriteLine($"Average time between clients departures from windows: {averageTimeBetweenCarDepartures}");
 
         double totalClients = cashiers.Sum(c => c.ServedElementsQuantity + c.Failure);
